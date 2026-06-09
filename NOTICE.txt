@@ -1,7 +1,17 @@
 Carrigan.FileTypeValidators
 
-This NOTICE file applies to the Carrigan.SqlTools packages and related source distributions.
+This NOTICE file applies to the Carrigan.FileTypeValidators packages and related source distributions.
 
 Copyright (c) 2025 - 2026 Carrigan Software Solutions LLC
 
 Licensed under the Apache License, Version 2.0.
+
+File Signature Reference Notice
+-------------------------------
+Carrigan.FileTypeValidators includes a small set of built-in file type validators for common file formats. The byte patterns used by these validators are treated as factual format identifiers and are intended to be derived from public file-format documentation, independent implementation knowledge, and/or independently verified sample files.
+
+This project does not include, redistribute, scrape, vendor, or mechanically translate the SEARCH/GCK File Signature Table or Gary Kessler's file signature table. Those resources may be useful external references for developers and maintainers. This project does not claim or rely on any license to redistribute those tables.
+
+External references:
+- GCK File Signature Table, powered by SEARCH: https://filesig.search.org/
+- Gary Kessler's File Signatures Table: https://www.garykessler.net/library/file_sigs.html

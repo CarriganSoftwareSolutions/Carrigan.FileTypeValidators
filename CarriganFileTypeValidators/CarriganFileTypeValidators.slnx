@@ -11,5 +11,6 @@
     <File Path="CodingStandards.md" />
     <File Path="Directory.Build.props" />
   </Folder>
+  <Project Path="Carrigan.FileTypeValidators.Tests/Carrigan.FileTypeValidators.Tests.csproj" Id="c4a90c94-f7e9-4ad9-bb1c-1b149d44d030" />
   <Project Path="Carrigan.FileTypeValidators/Carrigan.FileTypeValidators.csproj" />
 </Solution>

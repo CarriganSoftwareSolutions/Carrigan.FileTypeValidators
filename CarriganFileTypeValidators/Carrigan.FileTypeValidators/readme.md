@@ -2,12 +2,13 @@
 
 # Carrigan.FileTypeValidators
 ---
-Carrigan.FileTypeValidators allows for white listing and black listing files based on file extension and matching file type definitions
+Carrigan.FileTypeValidators allows for white listing and black listing files based on file extension and matching file type definitions.
 ---
 
 ## Table of Contents
 
 - [Installation](#installation)
+- [Signature Sources](#signature-sources)
 - [License](#license)
 
 ---
@@ -24,10 +25,22 @@ dotnet add package Carrigan.FileTypeValidators
 
 ---
 
+## Signature Sources
+
+Carrigan.FileTypeValidators includes a small set of built-in validators for common image file formats.
+
+The project does not include, redistribute, scrape, vendor, or mechanically translate the SEARCH/GCK File Signature Table or Gary Kessler's file signature table. Those resources are acknowledged as useful external references only.
+
+Built-in signature definitions should be sourced from public file-format documentation, independent implementation knowledge, and/or independently verified sample files. See `docs/SOURCES.md` in the package source for the source policy and reference notes.
+
+[Table of Contents](#table-of-contents)
+
+---
+
 ## License
 
-Carrigan.SqlTools  
-Copyright © 2025 Carrigan Software Solutions LLC
+Carrigan.FileTypeValidators  
+Copyright © 2025 - 2026 Carrigan Software Solutions LLC
 
 Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0
 
