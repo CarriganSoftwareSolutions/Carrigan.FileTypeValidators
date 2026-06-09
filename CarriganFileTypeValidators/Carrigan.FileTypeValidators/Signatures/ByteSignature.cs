@@ -2,23 +2,23 @@
 
 namespace Carrigan.FileTypeValidators.Signatures;
 
-internal class ByteSignature
+public class ByteSignature : ISignatureFragment
 {
-    internal ByteSignature(IEnumerable<byte> signature, int offset)
+    public ByteSignature(IEnumerable<byte> signature, int offset)
     {
         Offset = offset;
         Signature= signature;
     }
 
-    internal ByteSignature(IEnumerable<byte> signature)
+    public ByteSignature(IEnumerable<byte> signature)
     {
         Offset = 0;
         Signature = signature;
     }
 
     private int Offset { get; }
-    private IEnumerable<byte> Signature { get; set; }
+    private IEnumerable<byte> Signature { get; }
 
-    internal bool IsMatching(IEnumerable<byte> data) =>
+    public bool IsMatching(IEnumerable<byte> data) =>
         data.Skip(Offset).StartsWith(Signature);
 }

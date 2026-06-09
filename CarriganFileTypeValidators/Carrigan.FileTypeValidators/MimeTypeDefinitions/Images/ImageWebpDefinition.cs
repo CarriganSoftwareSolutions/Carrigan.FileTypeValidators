@@ -12,7 +12,13 @@ internal class ImageWebpDefinition : MimeImageTypeDefinition
 
     internal override IEnumerable<FileSignature> Signatures =>
     [
-        new(new ByteSignature("RIFF"u8.ToArray()), "webp")
-
+        new
+        (
+            [
+                new ByteSignature("RIFF"u8.ToArray(), 0),
+                new ByteSignature("WEBP"u8.ToArray(), 8)
+            ],
+            new FileExtension("webp")
+        )
     ];
 }

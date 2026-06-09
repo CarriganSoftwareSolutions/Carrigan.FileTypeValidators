@@ -1,44 +1,35 @@
-using Carrigan.FileTypeValidators.Signatures;
-using Carrigan.Core.Extensions;
-
 namespace Carrigan.FileTypeValidators.Signatures;
 
-internal class FileSignature
+public class FileSignature
 {
-    private readonly IEnumerable<ByteSignature> _signatures;
-    private readonly IEnumerable<ByteTrailer> _trailers;
+    private readonly IEnumerable<ISignatureFragment> _signatureFragments;
 
-    internal IEnumerable<string> FileExtensions { get; }
+    internal IEnumerable<FileExtension> FileExtensions { get; }
 
-    internal FileSignature(ByteSignature signature, string fileExtension)
+    public FileSignature(ISignatureFragment signatureFragments, FileExtension fileExtension)
     {
-        _signatures = [signature];
-        _trailers = [];
+        _signatureFragments = [signatureFragments];
         FileExtensions = [fileExtension];
     }
-    internal FileSignature(ByteSignature signature, string[] fileExtensions)
+    public FileSignature(ISignatureFragment signatureFragments, IEnumerable<FileExtension> fileExtensions)
     {
-        _signatures = [signature];
-        _trailers = [];
+        _signatureFragments = [signatureFragments];
         FileExtensions = fileExtensions;
     }
 
-    internal FileSignature(ByteSignature signature, ByteTrailer trailer, string fileExtension)
+    public FileSignature(IEnumerable<ISignatureFragment> signatureFragments, FileExtension fileExtension)
     {
-        _signatures = [signature];
-        _trailers = [trailer];
+        _signatureFragments = signatureFragments;
         FileExtensions = [fileExtension];
     }
 
-    internal FileSignature(ByteSignature signature, ByteTrailer trailer, string[] fileExtension)
+    public FileSignature(IEnumerable<ISignatureFragment> signatureFragments, IEnumerable<FileExtension> fileExtensions)
     {
-        _signatures = [signature];
-        _trailers = [trailer];
-        FileExtensions = fileExtension;
+        _signatureFragments = signatureFragments;
+        FileExtensions = fileExtensions;
     }
 
-    internal bool Validate(IEnumerable<byte> data, string extension) =>
-        (_signatures.IsNullOrEmpty() || _signatures.Where(signature => signature.IsMatching(data)).Any()) &&
-        (_trailers.IsNullOrEmpty() || _trailers.Where(trailer => trailer.IsMatching(data)).Any()) &&
-        (FileExtensions.IsNullOrEmpty() || FileExtensions.Where(fileExtension => fileExtension == extension).Any());
+    public bool Validate(IEnumerable<byte> data, FileExtension fileExtension) =>
+        _signatureFragments.All(signature => signature.IsMatching(data)) &&
+        FileExtensions.Contains(fileExtension);
 }

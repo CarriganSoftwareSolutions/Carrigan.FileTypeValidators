@@ -11,8 +11,8 @@ internal class ImageGifDefinition : MimeImageTypeDefinition
     private static readonly IEnumerable<FileType> fileTypeEnums = [FileType.Gif];
     private static readonly IEnumerable<FileSignature> signatures =
     [
-        new(new ByteSignature([0x47, 0x49, 0x46, 0x38, 0x37, 0x61]), new ByteTrailer([0x00, 0x3B]), "gif"),
-        new(new ByteSignature([0x47, 0x49, 0x46, 0x38, 0x39, 0x61]), new ByteTrailer([0x00, 0x3B]), "gif")
+        new([new ByteSignature([0x47, 0x49, 0x46, 0x38, 0x37, 0x61]), new ByteTrailer([0x00, 0x3B])], new FileExtension("gif")),
+        new([new ByteSignature([0x47, 0x49, 0x46, 0x38, 0x39, 0x61]), new ByteTrailer([0x00, 0x3B])], new FileExtension("gif"))
     ];
 
     protected sealed override string Subtype => subtype;

@@ -12,9 +12,9 @@ internal class ImagePjpegDefinition : MimeImageTypeDefinition
     private static readonly IEnumerable<FileType> fileTypeEnums = [FileType.Jpe, FileType.Jpg, FileType.Jpeg, FileType.Jfif];
     private static readonly IEnumerable<FileSignature> signatures =
     [
-        new(new ByteSignature([0xFF, 0xD8]), new ByteTrailer([0xFF, 0xD9]),  ["jpe", "jpeg", "jpg"]),
+        new([new ByteSignature([0xFF, 0xD8]), new ByteTrailer([0xFF, 0xD9])],  [new FileExtension("jpe"), new FileExtension("jpeg"), new FileExtension("jpg")]),
 
-        new(new ByteSignature([0xFF, 0xD8, 0xFF, 0xE0]), new ByteTrailer([0xFF, 0xD9]), "jfif"), 
+        new([new ByteSignature([0xFF, 0xD8, 0xFF, 0xE0]), new ByteTrailer([0xFF, 0xD9])], new FileExtension("jfif")), 
     ];
 
     protected sealed override string Subtype => subtype;

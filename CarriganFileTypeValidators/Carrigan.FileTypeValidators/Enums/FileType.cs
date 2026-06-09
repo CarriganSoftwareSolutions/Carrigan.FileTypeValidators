@@ -9,6 +9,7 @@ public enum FileType
     Jpeg,
     Jpg,
     Png,
+    Tif,
     Tiff,
     Webp
 }

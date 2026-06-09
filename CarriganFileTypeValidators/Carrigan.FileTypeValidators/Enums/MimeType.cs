@@ -1,6 +1,5 @@
 ﻿namespace Carrigan.FileTypeValidators.Enums;
 
-
 public enum MimeType
 {
     ImageBmp,
@@ -11,9 +10,10 @@ public enum MimeType
     ImageTiff,
     ImageWebp
 }
+
 public static class MimeTypeExtensions
 {
-    public static string ToString(this MimeType mimeType) => 
+    public static string ToMimeTypeString(this MimeType mimeType) =>
         mimeType switch
         {
             MimeType.ImageBmp => "image/bmp",
@@ -25,4 +25,9 @@ public static class MimeTypeExtensions
             MimeType.ImageWebp => "image/webp",
             _ => throw new ArgumentOutOfRangeException(nameof(mimeType), mimeType, "Unsupported MIME type"),
         };
+
+    [Obsolete("Use ToMimeTypeString instead.")]
+    public static string ToString(this MimeType mimeType) =>
+        mimeType.ToMimeTypeString();
+
 }
