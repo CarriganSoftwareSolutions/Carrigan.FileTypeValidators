@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../.vsspell/IgnoredWords.dic" />
+    <File Path="../CITATION.cff" />
+    <File Path="../CLA.md" />
+    <File Path="../LICENSE" />
+    <File Path="../NOTICE.txt" />
+    <File Path="../readme.md" />
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="CodingStandards.md" />
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Project Path="Carrigan.FileTypeValidators/Carrigan.FileTypeValidators.csproj" />
+</Solution>
