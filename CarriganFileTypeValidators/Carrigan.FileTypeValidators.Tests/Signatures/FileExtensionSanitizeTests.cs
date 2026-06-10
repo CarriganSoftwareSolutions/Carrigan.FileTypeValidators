@@ -1,6 +1,6 @@
-﻿using Carrigan.FileTypeValidators.Extensions.String;
+﻿using Carrigan.FileTypeValidators.Signatures;
 
-namespace Carrigan.FileTypeValidators.Tests.Extensions.String;
+namespace Carrigan.FileTypeValidators.Tests.Signatures;
 
 
 public class SanitizeFileExtensionTests
@@ -12,7 +12,7 @@ public class SanitizeFileExtensionTests
         string extension = ".JpG";
 
         // Act
-        string result = extension.SanitizeFileExtension();
+        FileExtension result = new (extension);
 
         // Assert
         Assert.Equal("JpG", result);
@@ -24,7 +24,7 @@ public class SanitizeFileExtensionTests
         string extension = ".jpg";
 
         // Act
-        string result = extension.SanitizeFileExtension();
+        FileExtension result = new(extension);
 
         // Assert
         Assert.Equal("jpg", result);
@@ -37,7 +37,7 @@ public class SanitizeFileExtensionTests
         string extension = "png";
 
         // Act
-        string result = extension.SanitizeFileExtension();
+        FileExtension result = new(extension);
 
         // Assert
         Assert.Equal("png", result);
@@ -50,7 +50,7 @@ public class SanitizeFileExtensionTests
         string extension = "PnG";
 
         // Act
-        string result = extension.SanitizeFileExtension();
+        FileExtension result = new(extension);
 
         // Assert
         Assert.Equal("PnG", result);
@@ -63,7 +63,7 @@ public class SanitizeFileExtensionTests
         string extension = "";
 
         // Act
-        string result = extension.SanitizeFileExtension();
+        FileExtension result = new(extension);
 
         // Assert
         Assert.Equal("", result);

@@ -1,6 +1,5 @@
 ﻿using Carrigan.Core.DataStructures;
 using Carrigan.FileTypeValidators.Enums;
-using Carrigan.FileTypeValidators.Extensions.String;
 using Carrigan.FileTypeValidators.Signatures;
 
 namespace Carrigan.FileTypeValidators;
@@ -31,8 +30,8 @@ public class MimeTypeValidator
         return this;
     }
 
-    public bool IsValid(byte[] data, string mimeType, string fileExtension) =>
-        _blackWhiteList.IsAllowed(fileExtension.SanitizeFileExtension()) && MimeTypeDefinitionFactory.GetDefinition(mimeType).IsValid(data, fileExtension.SanitizeFileExtension());
+    public bool IsValid(byte[] data, string mimeType, FileExtension fileExtension) =>
+        _blackWhiteList.IsAllowed(fileExtension) && MimeTypeDefinitionFactory.GetDefinition(mimeType).IsValid(data, fileExtension);
 
     private static IEnumerable<string> GetFileExtensions(FileType fileType) =>
         fileType switch

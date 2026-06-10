@@ -24,13 +24,13 @@ public class MimeTypeValidatorTests
     private static bool FileTypeTest(byte[] data, string fileExtension, string mimeData, params FileType[] ftp)
     {
         MimeTypeValidator validator = new(ftp);
-        return validator.IsValid(data, mimeData, fileExtension);
+        return validator.IsValid(data, mimeData, new(fileExtension));
     }
 
     private static bool MimeTypeTest(byte[] data, string fileExtension, string mimeData, params MimeType[] mime)
     {
         MimeTypeValidator validator = new(mime);
-        return validator.IsValid(data, mimeData, fileExtension);
+        return validator.IsValid(data, mimeData, new(fileExtension));
     }
 
     [Fact]
