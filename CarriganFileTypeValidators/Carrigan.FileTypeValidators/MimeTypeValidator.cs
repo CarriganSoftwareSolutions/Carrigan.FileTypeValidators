@@ -1,4 +1,5 @@
-﻿using Carrigan.FileTypeValidators.Enums;
+﻿using Carrigan.Core.DataStructures;
+using Carrigan.FileTypeValidators.Enums;
 using Carrigan.FileTypeValidators.Extensions.String;
 using Carrigan.FileTypeValidators.Signatures;
 
