@@ -8,5 +8,5 @@ namespace Carrigan.FileTypeValidators.Signatures;
 
 public interface ISignatureFragment
 {
-    bool IsMatching(IEnumerable<byte> data);
+    bool IsMatch(IEnumerable<byte> data);
 }

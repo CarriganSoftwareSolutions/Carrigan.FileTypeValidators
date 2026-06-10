@@ -19,6 +19,6 @@ public class ByteSignature : ISignatureFragment
     private int Offset { get; }
     private IEnumerable<byte> Signature { get; }
 
-    public bool IsMatching(IEnumerable<byte> data) =>
+    public bool IsMatch(IEnumerable<byte> data) =>
         data.Skip(Offset).StartsWith(Signature);
 }

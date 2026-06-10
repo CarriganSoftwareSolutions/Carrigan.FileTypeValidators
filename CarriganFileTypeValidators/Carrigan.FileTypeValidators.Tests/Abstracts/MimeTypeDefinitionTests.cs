@@ -1,46 +1,46 @@
-﻿using Carrigan.FileTypeValidators.Abstracts;
-using Carrigan.FileTypeValidators.MimeTypeDefinitions.Images;
-using Carrigan.FileTypeValidators.MimeTypeDefinitions;
+﻿
+using Carrigan.FileTypeValidators.FileTypeDefinitions.Images;
+using Carrigan.FileTypeValidators.FileTypeDefinitions;
 
 
 namespace Carrigan.FileTypeValidators.Tests.Abstracts;
 
-public class MimeTypeDefinitionTests
+public class FileTypeDefinitionTests
 {
     [Fact]
     public void AllFileExtensionsLogicTestJpegHasAtLeastOne()
     {
-        MimeTypeDefinition baseClass = new ImageJpegDefinition();
+        FileTypeDefinition baseClass = new JpegValidator();
         Assert.True(baseClass.AllFileExtensions.Any());
     }
     [Fact]
     public void AllFileExtensionsLogicTestJpegHasFour()
     {
-        MimeTypeDefinition baseClass = new ImageJpegDefinition();
+        FileTypeDefinition baseClass = new JpegValidator();
         Assert.Equal(4, baseClass.AllFileExtensions.Count());
     }
     [Fact]
     public void AllFileExtensionsLogicTestBmpHasOne()
     {
-        MimeTypeDefinition baseClass = new ImageBmpDefinition();
+        FileTypeDefinition baseClass = new BitmapValidator();
         Assert.Single(baseClass.AllFileExtensions);
     }
     [Fact]
     public void AllFileExtensionsLogicTestGifHasOne()
     {
-        MimeTypeDefinition baseClass = new ImageGifDefinition();
+        FileTypeDefinition baseClass = new GifValidator();
         Assert.Single(baseClass.AllFileExtensions);
     }
     [Fact]
     public void AllFileExtensionsLogicTestTiffHasTwo()
     {
-        MimeTypeDefinition baseClass = new ImageTiffDefinition();
+        FileTypeDefinition baseClass = new TiffValidator();
         Assert.Equal(2, baseClass.AllFileExtensions.Count());
     }
     [Fact]
     public void AllFileExtensionsLogicTestWebpHasOne()
     {
-        MimeTypeDefinition baseClass = new ImageWebpDefinition();
+        FileTypeDefinition baseClass = new WebpValidator();
         Assert.Single(baseClass.AllFileExtensions);
     }
 }

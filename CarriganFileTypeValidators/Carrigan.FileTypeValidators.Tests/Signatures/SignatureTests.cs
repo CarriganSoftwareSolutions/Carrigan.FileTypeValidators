@@ -13,7 +13,7 @@ public class SignatureTests
         byte[] data = [1, 2, 3, 4, 5];
         ByteSignature signature = new([1, 2], 0);
 
-        Assert.True(signature.IsMatching(data));
+        Assert.True(signature.IsMatch(data));
     }
     [Fact]
     public void ExactMatchingSignatureTest()
@@ -21,7 +21,7 @@ public class SignatureTests
         byte[] data = [1, 2];
         ByteSignature signature = new([1, 2], 0);
 
-        Assert.True(signature.IsMatching(data));
+        Assert.True(signature.IsMatch(data));
     }
 
     [Fact]
@@ -30,7 +30,7 @@ public class SignatureTests
         byte[] data = [1, 2];
         ByteSignature signature = new([1, 2, 3], 0);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class SignatureTests
         byte[] data = [1, 2, 3];
         ByteSignature signature = new([3, 4], 0);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
 
     [Fact]
@@ -48,7 +48,7 @@ public class SignatureTests
         byte[] data = [1, 2, 3];
         ByteSignature signature = new([], 0);
 
-        Assert.True(signature.IsMatching(data));
+        Assert.True(signature.IsMatch(data));
     }
 
     [Fact]
@@ -57,7 +57,7 @@ public class SignatureTests
         byte[] data = [];
         ByteSignature signature = new([1, 2, 3], 0);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
     #endregion
 
@@ -70,7 +70,7 @@ public class SignatureTests
         byte[] data = [1, 2, 3, 4, 5];
         ByteSignature signature = new([3, 4], 2);
 
-        Assert.True(signature.IsMatching(data));
+        Assert.True(signature.IsMatch(data));
     }
 
     [Fact]
@@ -79,7 +79,7 @@ public class SignatureTests
         byte[] data = [1];
         ByteSignature signature = new([3, 4], 2);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
     [Fact]
     public void ExactMatchingSignatureWithOffsetTest()
@@ -87,7 +87,7 @@ public class SignatureTests
         byte[] data = [1, 2, 3, 4];
         ByteSignature signature = new([3, 4], 2);
 
-        Assert.True(signature.IsMatching(data));
+        Assert.True(signature.IsMatch(data));
     }
 
     [Fact]
@@ -96,7 +96,7 @@ public class SignatureTests
         byte[] data = [1, 2];
         ByteSignature signature = new([1, 2, 3], 1);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
 
     [Fact]
@@ -105,7 +105,7 @@ public class SignatureTests
         byte[] data = [1, 2, 3];
         ByteSignature signature = new([3, 4], 1);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
 
     [Fact]
@@ -114,7 +114,7 @@ public class SignatureTests
         byte[] data = ""u8.ToArray();
         ByteSignature signature = new([1, 2, 3], 1);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
     #endregion
 }

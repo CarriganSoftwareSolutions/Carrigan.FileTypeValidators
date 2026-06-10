@@ -2,7 +2,7 @@ namespace Carrigan.FileTypeValidators.Signatures;
 
 public class FileSignature
 {
-    private readonly IEnumerable<ISignatureFragment> _signatureFragments;
+    internal readonly IEnumerable<ISignatureFragment> _signatureFragments;
 
     internal IEnumerable<FileExtension> FileExtensions { get; }
 
@@ -29,7 +29,11 @@ public class FileSignature
         FileExtensions = fileExtensions;
     }
 
-    public bool Validate(IEnumerable<byte> data, FileExtension fileExtension) =>
-        _signatureFragments.All(signature => signature.IsMatching(data)) &&
+    public bool WhiteListMatch(IEnumerable<byte> data, FileExtension fileExtension) =>
+        _signatureFragments.All(signature => signature.IsMatch(data)) &&
         FileExtensions.Contains(fileExtension);
+
+    public bool BlackListMatch(IEnumerable<byte> data, FileExtension fileExtension) =>
+        _signatureFragments
+            .Any(signature => signature.IsMatch(data)) || FileExtensions.Contains(fileExtension);
 }

@@ -17,6 +17,6 @@ public class ByteTrailer : ISignatureFragment
     private int Offset { get; }
     private IEnumerable<byte> Trailer { get; set; }
 
-    public bool IsMatching(IEnumerable<byte> data) =>
+    public bool IsMatch(IEnumerable<byte> data) =>
         data.SkipLast(Offset).EndsWith(Trailer);
 }

@@ -11,7 +11,7 @@ public class TrailersTests
         byte[] data = [1, 2, 3, 4, 5];
         ByteTrailer signature = new([4, 5], 0);
 
-        Assert.True(signature.IsMatching(data));
+        Assert.True(signature.IsMatch(data));
     }
     [Fact]
     public void ExactMatchingTrailerTest()
@@ -19,7 +19,7 @@ public class TrailersTests
         byte[] data = [1, 2];
         ByteTrailer signature = new([1, 2], 0);
 
-        Assert.True(signature.IsMatching(data));
+        Assert.True(signature.IsMatch(data));
     }
 
     [Fact]
@@ -28,7 +28,7 @@ public class TrailersTests
         byte[] data = [1, 2];
         ByteTrailer signature = new([0, 1, 2], 0);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
 
     [Fact]
@@ -37,7 +37,7 @@ public class TrailersTests
         byte[] data = [1, 2];
         ByteTrailer signature = new([1, 2, 3], 0);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class TrailersTests
         byte[] data = [1, 2, 3];
         ByteTrailer signature = new([3, 4], 0);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
 
     [Fact]
@@ -55,7 +55,7 @@ public class TrailersTests
         byte[] data = [1, 2, 3];
         ByteTrailer signature = new(""u8.ToArray(), 0);
 
-        Assert.True(signature.IsMatching(data));
+        Assert.True(signature.IsMatch(data));
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public class TrailersTests
         byte[] data = ""u8.ToArray();
         ByteTrailer signature = new([1, 2, 3], 0);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
     #endregion
 
@@ -77,7 +77,7 @@ public class TrailersTests
         byte[] data = [1, 2, 3, 4, 5];
         ByteTrailer signature = new([3, 4], 1);
 
-        Assert.True(signature.IsMatching(data));
+        Assert.True(signature.IsMatch(data));
     }
 
     [Fact]
@@ -86,7 +86,7 @@ public class TrailersTests
         byte[] data = [1];
         ByteTrailer signature = new([1], 2);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
     [Fact]
     public void ExactMatchingTrailerWithOffsetTest()
@@ -94,7 +94,7 @@ public class TrailersTests
         byte[] data = [1, 2, 3, 4];
         ByteTrailer signature = new([1, 2], 2);
 
-        Assert.True(signature.IsMatching(data));
+        Assert.True(signature.IsMatch(data));
     }
 
     [Fact]
@@ -103,7 +103,7 @@ public class TrailersTests
         byte[] data = [1, 2];
         ByteTrailer signature = new([1, 2, 3], 1);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
 
     [Fact]
@@ -112,7 +112,7 @@ public class TrailersTests
         byte[] data = [1, 2, 3];
         ByteTrailer signature = new([3, 4], 1);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
 
     [Fact]
@@ -121,7 +121,7 @@ public class TrailersTests
         byte[] data = ""u8.ToArray();
         ByteTrailer signature = new([1, 2, 3], 1);
 
-        Assert.False(signature.IsMatching(data));
+        Assert.False(signature.IsMatch(data));
     }
     #endregion
 }
