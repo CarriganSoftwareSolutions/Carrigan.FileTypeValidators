@@ -8,9 +8,6 @@ public class JpegValidator : FileTypeDefinition
     [
         new([new ByteSignature([0xFF, 0xD8]), new ByteTrailer([0xFF, 0xD9])],  [new FileExtension("jpe"), new FileExtension("jpeg"), new FileExtension("jpg")]),
         new([new ByteSignature([0xFF, 0xD8, 0xFF, 0xE0]), new ByteTrailer([0xFF, 0xD9])], new FileExtension("jfif")),
-        new([new ByteSignature([0xFF, 0xD8, 0xFF, 0xE1]), new ByteTrailer([0xFF, 0xD9])],  new FileExtension("jpg")),
-        new([new ByteSignature([0xFF, 0xD8, 0xFF, 0xE8]), new ByteTrailer([0xFF, 0xD9])],  new FileExtension("jpg")),
-        new([new ByteSignature([0xFF, 0xD8, 0xFF, 0xE0]), new ByteTrailer([0xFF, 0xD9])], new FileExtension("jfif")),
     ];
     private static readonly IEnumerable<MimeType> mimeTypes = [new("image", "jpeg"), new("image", "pjpeg")];
 

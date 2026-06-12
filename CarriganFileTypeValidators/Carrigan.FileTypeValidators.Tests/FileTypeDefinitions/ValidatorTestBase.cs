@@ -1,29 +1,113 @@
-﻿using Carrigan.FileTypeValidators.FileTypeDefinitions;
-using Carrigan.FileTypeValidators.FileTypeDefinitions.Images;
+﻿using Carrigan.Core.Extensions;
+using Carrigan.FileTypeValidators.FileTypeDefinitions;
 using Carrigan.FileTypeValidators.Signatures;
+using System.ComponentModel.DataAnnotations;
 
+namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions;
 
-
-namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions.Images;
-
-//IGNORE SPELLING: Jpeg Jfif Jpg jtt jpe
-
-public class JpegValidatorTests : ValidatorTestBase
-
+public abstract class ValidatorTestBase
 {
-    protected override FileTypeDefinition Validator => 
-        new JpegValidator();
+    protected abstract FileTypeDefinition Validator { get; }
+    internal  abstract IEnumerable<SampleData> SampleData { get; }
 
-    internal override IEnumerable<SampleData> SampleData =>
-    [
-        new ([0xFF, 0xD8], [0xFF, 0xD9], new("jpe")),
-        new ([0xFF, 0xD8], [0xFF, 0xD9], new("jpeg")),
-        new ([0xFF, 0xD8], [0xFF, 0xD9], new("jpg")),
-        new ([0xFF, 0xD8, 0xFF, 0xE0], [0xFF, 0xD9], new("jfif")),
-    ];
+    protected abstract IEnumerable<MimeType> MimeTypes { get; }
 
-    protected override IEnumerable<MimeType> MimeTypes =>
-         [new("image", "jpeg"), new("image", "pjpeg")];
+    protected FileTypeValidator validator;
+
+    protected ValidatorTestBase() => 
+        validator = new FileTypeValidator([Validator]);
+
+    private bool IsValid(SampleFileModel sampleFileModel) => 
+        validator.IsValid([.. sampleFileModel.Bytes], sampleFileModel.MimeType, sampleFileModel.FileExtension);
+
+    [Fact]
+    public void ExactTest()
+    {
+        SampleFileModel sampleFileModel;
+        foreach (MimeType mime in MimeTypes)
+        {
+            foreach (SampleData sampleData in SampleData)
+            {
+                sampleFileModel = new()
+                {
+                    Bytes = sampleData.ToExact(),
+                    MimeType = mime,
+                    FileExtension = sampleData.FileExtension
+                };
+                Assert.True(IsValid(sampleFileModel));
+            }
+        }
+    }
+
+    [Fact]
+    public void Valid()
+    {
+        SampleFileModel sampleFileModel;
+        foreach (MimeType mime in MimeTypes)
+        {
+            foreach (SampleData sampleData in SampleData)
+            {
+                sampleFileModel = new()
+                {
+                    Bytes = sampleData.ToValid(),
+                    MimeType = mime,
+                    FileExtension = sampleData.FileExtension
+                };
+                Assert.True(IsValid(sampleFileModel));
+            }
+        }
+    }
+
+    [Fact]
+    public void InvalidLeader()
+    {
+        SampleFileModel sampleFileModel;
+        foreach (MimeType mime in MimeTypes)
+        {
+            foreach (SampleData sampleData in SampleData)
+            {
+                if (sampleData.HasLeaderBytes())
+                {
+                    IEnumerable<byte[]> allInvalids = sampleData.ToInvalidBecauseOfLeaders();
+                    foreach (byte[] bytes in sampleData.ToInvalidBecauseOfLeaders())
+                    {
+                        sampleFileModel = new()
+                        {
+                            Bytes = bytes,
+                            MimeType = mime,
+                            FileExtension = sampleData.FileExtension
+                        };
+                        Assert.False(IsValid(sampleFileModel));
+                    }
+                }
+            }
+        }
+    }
+
+    [Fact]
+    public void InvalidTrailer()
+    {
+        SampleFileModel sampleFileModel;
+        foreach (MimeType mime in MimeTypes)
+        {
+            foreach (SampleData sampleData in SampleData)
+            {
+                if (sampleData.HasTrailerBytes())
+                {
+                    foreach (byte[] bytes in sampleData.ToInvalidBecauseOfTrailer())
+                    {
+                        sampleFileModel = new()
+                        {
+                            Bytes = bytes,
+                            MimeType = mime,
+                            FileExtension = sampleData.FileExtension
+                        };
+                        Assert.False(IsValid(sampleFileModel));
+                    }
+                }
+            }
+        }
+    }
 
     //[Fact]
     //public void Exact_Plus_Extra_True()
