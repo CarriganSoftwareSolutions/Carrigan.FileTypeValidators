@@ -7,6 +7,11 @@ namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions;
 
 public abstract class ValidatorTestBase
 {
+    protected static IEnumerable<byte?> FromReadOnlySpan(ReadOnlySpan<byte> bytes) =>
+        bytes.ToArray().AsEnumerable().Select(aByte => (byte?)aByte);
+    protected static IEnumerable<byte?> XNulls(int x) =>
+        Enumerable.Repeat<byte?>(null, x);
+
     protected abstract FileTypeDefinition ValidatorDefinition { get; }
     protected abstract IEnumerable<SingleSample> Samples { get; }
     protected abstract IEnumerable<MimeType> MimeTypes { get; }
@@ -19,7 +24,6 @@ public abstract class ValidatorTestBase
     {
         Data = new(Samples, MimeTypes);
         Validator = new FileTypeValidator([ValidatorDefinition]);
-
     }
 
     private bool IsValid(SampleFileModel sampleFileModel) => 

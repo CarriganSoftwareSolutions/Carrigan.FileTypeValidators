@@ -26,10 +26,10 @@ public class SingleSample
     internal FileExtension FileExtension { get; init; }
 
 
-    internal SingleSample(byte?[] leadBytes, byte?[] trailerBytes, FileExtension fileExtension)
+    internal SingleSample(byte?[]? leadBytes, byte?[]? trailerBytes, FileExtension fileExtension)
     {
-        LeaderBytes = leadBytes;
-        TrailerBytes = trailerBytes;
+        LeaderBytes = leadBytes ?? [];
+        TrailerBytes = trailerBytes ?? [];
         FileExtension = fileExtension;
     }
 }
