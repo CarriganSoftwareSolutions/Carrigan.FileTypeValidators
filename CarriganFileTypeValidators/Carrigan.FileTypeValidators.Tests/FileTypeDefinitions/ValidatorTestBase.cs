@@ -7,196 +7,110 @@ namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions;
 
 public abstract class ValidatorTestBase
 {
-    protected abstract FileTypeDefinition Validator { get; }
-    internal  abstract IEnumerable<SampleData> SampleData { get; }
-
+    protected abstract FileTypeDefinition ValidatorDefinition { get; }
+    protected abstract IEnumerable<SingleSample> Samples { get; }
     protected abstract IEnumerable<MimeType> MimeTypes { get; }
 
-    protected FileTypeValidator validator;
+    internal SampleData Data { get; init; }
 
-    protected ValidatorTestBase() => 
-        validator = new FileTypeValidator([Validator]);
+    protected FileTypeValidator Validator;
+
+    protected ValidatorTestBase()
+    {
+        Data = new(Samples, MimeTypes);
+        Validator = new FileTypeValidator([ValidatorDefinition]);
+
+    }
 
     private bool IsValid(SampleFileModel sampleFileModel) => 
-        validator.IsValid([.. sampleFileModel.Bytes], sampleFileModel.MimeType, sampleFileModel.FileExtension);
+        Validator.IsValid([.. sampleFileModel.Bytes], sampleFileModel.MimeType, sampleFileModel.FileExtension);
 
     [Fact]
     public void ExactTest()
     {
-        SampleFileModel sampleFileModel;
-        foreach (MimeType mime in MimeTypes)
-        {
-            foreach (SampleData sampleData in SampleData)
+        IEnumerable<SampleFileModel> exactSamples = Data.GetExactSamples();
+
+            foreach (SampleFileModel sampleFileModel in exactSamples)
             {
-                sampleFileModel = new()
-                {
-                    Bytes = sampleData.ToExact(),
-                    MimeType = mime,
-                    FileExtension = sampleData.FileExtension
-                };
                 Assert.True(IsValid(sampleFileModel));
             }
+    }
+    [Fact]
+    public void Valid()
+    {
+        IEnumerable<SampleFileModel> validExamples = Data.GetValidExamples();
+
+        foreach (SampleFileModel sampleFileModel in validExamples)
+        {
+            Assert.True(IsValid(sampleFileModel));
         }
     }
 
     [Fact]
-    public void Valid()
+    public void ValidDueToFileExtension()
     {
-        SampleFileModel sampleFileModel;
-        foreach (MimeType mime in MimeTypes)
+        IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidDueToFileExtension();
+
+        foreach (SampleFileModel sampleFileModel in invalidExamples)
         {
-            foreach (SampleData sampleData in SampleData)
-            {
-                sampleFileModel = new()
-                {
-                    Bytes = sampleData.ToValid(),
-                    MimeType = mime,
-                    FileExtension = sampleData.FileExtension
-                };
-                Assert.True(IsValid(sampleFileModel));
-            }
+            Assert.False(IsValid(sampleFileModel));
         }
     }
 
     [Fact]
     public void InvalidLeader()
     {
-        SampleFileModel sampleFileModel;
-        foreach (MimeType mime in MimeTypes)
+        IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidsDueToLeader();
+
+        foreach (SampleFileModel sampleFileModel in invalidExamples)
         {
-            foreach (SampleData sampleData in SampleData)
-            {
-                if (sampleData.HasLeaderBytes())
-                {
-                    IEnumerable<byte[]> allInvalids = sampleData.ToInvalidBecauseOfLeaders();
-                    foreach (byte[] bytes in sampleData.ToInvalidBecauseOfLeaders())
-                    {
-                        sampleFileModel = new()
-                        {
-                            Bytes = bytes,
-                            MimeType = mime,
-                            FileExtension = sampleData.FileExtension
-                        };
-                        Assert.False(IsValid(sampleFileModel));
-                    }
-                }
-            }
+            Assert.False(IsValid(sampleFileModel));
         }
     }
 
     [Fact]
     public void InvalidTrailer()
     {
-        SampleFileModel sampleFileModel;
-        foreach (MimeType mime in MimeTypes)
+        IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidsDueToTrailer();
+
+        foreach (SampleFileModel sampleFileModel in invalidExamples)
         {
-            foreach (SampleData sampleData in SampleData)
-            {
-                if (sampleData.HasTrailerBytes())
-                {
-                    foreach (byte[] bytes in sampleData.ToInvalidBecauseOfTrailer())
-                    {
-                        sampleFileModel = new()
-                        {
-                            Bytes = bytes,
-                            MimeType = mime,
-                            FileExtension = sampleData.FileExtension
-                        };
-                        Assert.False(IsValid(sampleFileModel));
-                    }
-                }
-            }
+            Assert.False(IsValid(sampleFileModel));
         }
     }
 
-    //[Fact]
-    //public void Exact_Plus_Extra_True()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.True(definition.WhiteListMatch([0xFF, 0xD8, 0xFF, 0xE1, 0x00, 0xFF, 0xD9], new("image", "jpeg"), new FileExtension("jpg")));
-    //}
-
-    //[Fact]
-    //public void Exact_Plus_Extra_At_End_False()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0xFF, 0xD8, 0xFF, 0xE8, 0xFF, 0xD9, 0x00], new("image", "jpeg"), new FileExtension("jpg")));
-    //}
-
-    //[Fact]
-    //public void Exact_Plus_Extra_At_Start_False()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0x00, 0xFF, 0xD8, 0xFF, 0xD9], new("image", "jpeg"), new FileExtension("jpe")));
-    //}
-
-    //[Fact]
-    //public void To_Small_Sig()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0xFF, 0xD8, 0xFF, 0xFF, 0xD9], new("image", "jpeg"), new FileExtension("jfif")));
-    //}
-
-    //[Fact]
-    //public void To_Small_Footer()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0xFF, 0xD8, 0xFF, 0xE0, 0xD9], new("image", "jpeg"), new FileExtension("jfif")));
-    //}
 
 
-    //[Fact]
-    //public void Wrong_Extension()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0xFF, 0xD8, 0xFF, 0xE0, 0xFF, 0xD9], new("image", "jpeg"), new FileExtension("jtt")));
-    //}
-    //[Fact]
-    //public void No_Extension()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0xFF, 0xD8, 0xFF, 0xE0, 0xFF, 0xD9], new("image", "jpeg"), new FileExtension("")));
-    //}
-    //[Fact]
-    //public void Empty()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([], new("image", "jpeg"), new FileExtension("jpg")));
-    //}
-    //[Fact]
-    //public void Empty_Header()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0xFF, 0xD9], new("image", "jpeg"), new FileExtension("jpg")));
-    //}
-    //[Fact]
-    //public void Empty_Footer()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0xFF, 0xD8, 0xFF, 0xE8], new("image", "jpeg"), new FileExtension("jpg")));
-    //}
-    //[Fact]
-    //public void Bad_Value_Header()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0xF0, 0xD8, 0xFF, 0xE1, 0x00, 0xFF, 0xD9], new("image", "jpeg"), new FileExtension("jpg")));
-    //}
-    //[Fact]
-    //public void Bad_Value_Header2()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0xFF, 0x08, 0xFF, 0xE1, 0x00, 0xFF, 0xD9], new("image", "jpeg"), new FileExtension("jpg")));
-    //}
-    //[Fact]
-    //public void Bad_Value_Footer1()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0xFF, 0xD8, 0xFF, 0xE1, 0x00, 0xFF, 0xD0], new("image", "jpeg"), new FileExtension("jpg")));
-    //}
-    //[Fact]
-    //public void Bad_Value_Footer2()
-    //{
-    //    JpegValidator definition = new();
-    //    Assert.False(definition.WhiteListMatch([0xFF, 0xD8, 0xFF, 0xE1, 0x00, 0xFF, 0xD0], new("image", "jpeg"), new FileExtension("jpg")));
-    //}
+    [Fact]
+    public void InvalidLeaderDueToOffset()
+    {
+        IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidLeaderDueToOffset();
+
+        foreach (SampleFileModel sampleFileModel in invalidExamples)
+        {
+            Assert.False(IsValid(sampleFileModel));
+        }
+    }
+
+    [Fact]
+    public void InvalidTrailerDueToOffset()
+    {
+        IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidTrailerDueToOffset();
+
+        foreach (SampleFileModel sampleFileModel in invalidExamples)
+        {
+            Assert.False(IsValid(sampleFileModel));
+        }
+    }
+
+    [Fact]
+    public void InvalidTrailerEmptyBytes()
+    {
+        IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidDueToEmptyBytes();
+
+        foreach (SampleFileModel sampleFileModel in invalidExamples)
+        {
+            Assert.False(IsValid(sampleFileModel));
+        }
+    }
 }

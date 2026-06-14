@@ -11,10 +11,10 @@ namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions.Images;
 public class JpegValidatorTests : ValidatorTestBase
 
 {
-    protected override FileTypeDefinition Validator => 
+    protected override FileTypeDefinition ValidatorDefinition => 
         new JpegValidator();
 
-    internal override IEnumerable<SampleData> SampleData =>
+    protected override IEnumerable<SingleSample> Samples =>
     [
         new ([0xFF, 0xD8], [0xFF, 0xD9], new("jpe")),
         new ([0xFF, 0xD8], [0xFF, 0xD9], new("jpeg")),
