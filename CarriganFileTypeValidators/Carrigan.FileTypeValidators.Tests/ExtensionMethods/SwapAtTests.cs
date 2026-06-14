@@ -9,7 +9,7 @@ public sealed class ByteEnumerableExtensionsTests
     {
         byte[] source = [0x01, 0x02, 0x03];
 
-        byte[] result = [.. source.SwapAt<byte>(1, 0xFF)];
+        byte[] result = [.. source.ReplaceAt<byte>(1, 0xFF)];
 
         Assert.Equal([0x01, 0xFF, 0x03], result);
     }
@@ -19,7 +19,7 @@ public sealed class ByteEnumerableExtensionsTests
     {
         byte[] source = [0x01, 0x02, 0x03];
 
-        byte[] result = [.. source.SwapAt<byte>(0, 0xFF)];
+        byte[] result = [.. source.ReplaceAt<byte>(0, 0xFF)];
 
         Assert.Equal([0xFF, 0x02, 0x03], result);
     }
@@ -29,7 +29,7 @@ public sealed class ByteEnumerableExtensionsTests
     {
         byte[] source = [0x01, 0x02, 0x03];
 
-        byte[] result = [.. source.SwapAt<byte>(2, 0xFF)];
+        byte[] result = [.. source.ReplaceAt<byte>(2, 0xFF)];
 
         Assert.Equal([0x01, 0x02, 0xFF], result);
     }
@@ -39,7 +39,7 @@ public sealed class ByteEnumerableExtensionsTests
     {
         byte[] source = [0x01, 0x02, 0x03];
 
-        byte[] result = [.. source.SwapAt<byte>(1, 0xFF)];
+        byte[] result = [.. source.ReplaceAt<byte>(1, 0xFF)];
 
         Assert.Equal([0x01, 0x02, 0x03], source);
         Assert.Equal([0x01, 0xFF, 0x03], result);
@@ -50,7 +50,7 @@ public sealed class ByteEnumerableExtensionsTests
     {
         byte[] source = [0x01, 0x02, 0x03];
 
-        byte[] result = [.. source.SwapAt<byte>(1, 0x02)];
+        byte[] result = [.. source.ReplaceAt<byte>(1, 0x02)];
 
         Assert.Equal([0x01, 0x02, 0x03], result);
     }
@@ -62,7 +62,7 @@ public sealed class ByteEnumerableExtensionsTests
 
         Assert.Throws<ArgumentNullException>(() =>
             source!
-                .SwapAt<byte>(0, 0xFF)
+                .ReplaceAt<byte>(0, 0xFF)
                 .ToArray());
     }
 
@@ -73,7 +73,7 @@ public sealed class ByteEnumerableExtensionsTests
 
         Assert.Throws<ArgumentOutOfRangeException>(() =>
             source
-                .SwapAt<byte>(-1, 0xFF)
+                .ReplaceAt<byte>(-1, 0xFF)
                 .ToArray());
     }
 
@@ -84,7 +84,7 @@ public sealed class ByteEnumerableExtensionsTests
 
         Assert.Throws<ArgumentOutOfRangeException>(() =>
             source
-                .SwapAt<byte>(3, 0xFF)
+                .ReplaceAt<byte>(3, 0xFF)
                 .ToArray());
     }
 
@@ -95,7 +95,7 @@ public sealed class ByteEnumerableExtensionsTests
 
         Assert.Throws<ArgumentOutOfRangeException>(() =>
             source
-                .SwapAt<byte>(0, 0xFF)
+                .ReplaceAt<byte>(0, 0xFF)
                 .ToArray());
     }
 
@@ -106,7 +106,7 @@ public sealed class ByteEnumerableExtensionsTests
 
         IEnumerable<byte> source = GetSource();
 
-        IEnumerable<byte> result = source.SwapAt<byte>(1, 0xFF);
+        IEnumerable<byte> result = source.ReplaceAt<byte>(1, 0xFF);
 
         Assert.False(enumerated);
 

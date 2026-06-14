@@ -65,6 +65,14 @@ internal class SampleData
             .. TrailerBytes.FillNullsWithValues(BytesNotInSignatures()),
         ];
 
+    /// <summary>
+    /// Generates byte arrays that do not match the known bytes in the lead byte arrays, 
+    /// by swapping one known byte in the lead byte arrays with a byte value not in signatures.
+    /// This process is done for each known byte in the lead byte array, to generate several invalid datasets that are off by one.
+    /// </summary>
+    /// <returns>
+    /// Byte arrays that do not match the known bytes in the lead byte arrays.
+    /// </returns>
     internal IEnumerable<byte[]> ToInvalidBecauseOfLeaders() =>
         GetInvalidPartials(LeaderBytes)
             .Select
@@ -76,6 +84,14 @@ internal class SampleData
                 ]
             );
 
+    /// <summary>
+    /// Generates byte arrays that do not match the known bytes in the trailer byte arrays, 
+    /// by swapping one known byte in the trailer byte arrays with a byte value not in signatures.
+    /// This process is done for each known byte in the trailer byte array, to generate several invalid datasets that are off by one.
+    /// </summary>
+    /// <returns>
+    /// Byte arrays that do not match the known bytes in the trailer byte arrays.
+    /// </returns>
     internal IEnumerable<byte[]> ToInvalidBecauseOfTrailer() =>
         GetInvalidPartials(TrailerBytes)
             .Select
@@ -87,6 +103,17 @@ internal class SampleData
                 ]
             );
 
+    /// <summary>
+    /// Generates byte arrays that do not match the known bytes in the provided byte array,
+    /// by swapping one known byte in the provided byte array with a byte value not in signatures.
+    /// This process is done for each known byte in the provided byte array, to generate several invalid datasets that are off by one.
+    /// </summary>
+    /// <param name="signaturePartial">
+    /// A byte array representing either the lead or trailer bytes of the file signature, where nulls represent wild cards.
+    /// </param>
+    /// <returns>
+    /// Byte arrays that do not match the known bytes in the provided byte array.
+    /// </returns>
     internal IEnumerable<byte?[]> GetInvalidPartials(byte?[] signaturePartial)
     {
         Func<byte> cycler = BytesNotInSignatures().CreateCycler();
@@ -95,7 +122,7 @@ internal class SampleData
         {
             if (signaturePartial[i] is not null)
             {
-                returnValue = returnValue.Append([.. signaturePartial.SwapAt(i, cycler())]);
+                returnValue = returnValue.Append([.. signaturePartial.ReplaceAt(i, cycler())]);
             }
         }
         return returnValue;

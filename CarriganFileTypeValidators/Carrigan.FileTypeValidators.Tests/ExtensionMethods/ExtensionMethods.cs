@@ -6,7 +6,25 @@ namespace Carrigan.FileTypeValidators.Tests.ExtensionMethods;
 
 internal static class ExtensionMethods
 {
-    internal static IEnumerable<T> SwapAt<T>(this IEnumerable<T> source, int index, T value)
+    /// <summary>
+    /// Returns a new enumerable where the value at the specified index is replaced with the provided value, and all other values remain the same.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type of the values in the enumerable.
+    /// </typeparam>
+    /// <param name="source">
+    /// The source enumerable. Cannot be null.
+    /// </param>
+    /// <param name="index">
+    /// The index of the value to replace.
+    /// </param>
+    /// <param name="value">
+    /// The value to replace with.
+    /// </param>
+    /// <returns>
+    /// A new enumerable where the value at the specified index is replaced with the provided value.
+    /// </returns>
+    internal static IEnumerable<T> ReplaceAt<T>(this IEnumerable<T> source, int index, T value)
     {
         ArgumentNullException.ThrowIfNull(source);
 
