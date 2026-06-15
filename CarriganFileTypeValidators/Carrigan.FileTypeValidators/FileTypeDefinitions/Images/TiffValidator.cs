@@ -8,6 +8,7 @@ public class TiffValidator : FileTypeDefinition
     [
         new(new ByteSignature([0x49, 0x49, 0x2A, 0x00]), [new FileExtension("tif"), new FileExtension("tiff")]),
         new(new ByteSignature([0x4D, 0x4D, 0x00, 0x2A]), [new FileExtension("tif"), new FileExtension("tiff")]),
+        //big tiff [0x49, 0x49, 0x2B, 0x00]: https://www.loc.gov/preservation/digital/formats/fdd/fdd000328.shtml
         new(new ByteSignature([0x49, 0x49, 0x2B, 0x00]), [new FileExtension("tif"), new FileExtension("tiff")]),
         new(new ByteSignature([0x4D, 0x4D, 0x00, 0x2B]), [new FileExtension("tif"), new FileExtension("tiff")])
     ];

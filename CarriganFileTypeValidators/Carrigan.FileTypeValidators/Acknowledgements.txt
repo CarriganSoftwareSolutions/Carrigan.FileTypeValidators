@@ -1,14 +1,14 @@
 ACKNOWLEDGEMENTS
 
 This file accompanies this package as a courtesy acknowledgement of
-third-party libraries, frameworks, and tools used in the development of
-this package and related projects.
+third-party libraries, frameworks, tools, and external references used in the
+development of this package and related projects.
 
 This file is provided for informational purposes only. It is not intended
 to replace, modify, or restate the license terms of any third-party
-dependency. For complete and authoritative licensing information, please
-refer to the applicable package metadata, license files, notice files,
-and upstream project repositories.
+dependency or external reference. For complete and authoritative licensing
+information, please refer to the applicable package metadata, license files,
+notice files, upstream project repositories, and source websites.
 
 - Microsoft.NETCore.App  
     © Microsoft Corporation  
@@ -21,17 +21,24 @@ and upstream project repositories.
     Licensed under the MIT License
     https://github.com/dotnet/sourcelink/blob/main/License.txt
 
+- Gary C. Kessler, GCK's File Signatures Table
+    External research and comparison reference for file signature information
+    https://www.garykessler.net/library/file_sigs_GCK_latest.html
 
-- SEARCH/GCK File Signature Table and Gary Kessler's File Signatures Table
-    External research references for file signature information
+    Copyright and use notice: the page is copyright © 2002-2026 Gary C.
+    Kessler and permits visitor use with appropriate attribution, provided the
+    information is not altered without express written permission.
+
+    This project does not include, redistribute, scrape, vendor, bulk-import,
+    or mechanically translate the Kessler table. This project also does not
+    reproduce Kessler's table descriptions, notes, row ordering, table
+    structure, or bulk selection of entries.
+
+- GCK File Signature Table, powered by SEARCH
+    External research reference for file signature information
     https://filesig.search.org/
-    https://www.garykessler.net/library/file_sigs.html
 
-    This project does not include, redistribute, scrape, vendor, or mechanically
-    translate either table. The references are acknowledged as useful research
-    resources only. Built-in validators should be maintained from public
-    file-format documentation, independent implementation knowledge, and/or
-    independently verified sample files.
+- https://www.loc.gov/preservation/digital/formats/fdd/fdd000328.shtml
 
 Unless otherwise expressly stated in a given package or distribution, references
 to third-party dependencies in this package generally refer to dependencies
@@ -39,9 +46,10 @@ that are restored, resolved, or loaded separately through normal package or
 framework mechanisms and are not bundled or redistributed as part of this
 package.
 
-Accordingly, the inclusion of a reference to a third-party dependency in this
-file should not be interpreted to mean that the dependency's binaries, source
-code, assets, license files, or notice files are included within this package.
+Accordingly, the inclusion of a reference to a third-party dependency or
+external reference in this file should not be interpreted to mean that the
+dependency's binaries, source code, assets, license files, notice files, table
+contents, or website contents are included within this package.
 
 Special thanks to the authors, maintainers, and contributors of these and
 other open-source projects whose work helps make this software possible.

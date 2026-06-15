@@ -29,9 +29,9 @@ dotnet add package Carrigan.FileTypeValidators
 
 Carrigan.FileTypeValidators includes a small set of built-in validators for common image file formats.
 
-The project does not include, redistribute, scrape, vendor, or mechanically translate the SEARCH/GCK File Signature Table or Gary Kessler's file signature table. Those resources are acknowledged as useful external references only.
+Gary C. Kessler's GCK File Signatures Table and the SEARCH-hosted GCK File Signature Table are acknowledged as useful external research and comparison references. Kessler's table is attributed in the package `NOTICE.txt` and `Acknowledgements.txt` files.
 
-Built-in signature definitions should be sourced from public file-format documentation, independent implementation knowledge, and/or independently verified sample files. See `docs/SOURCES.md` in the package source for the source policy and reference notes.
+The project does not include, redistribute, scrape, vendor, bulk-import, or mechanically translate those tables. Built-in signature definitions should be sourced from public file-format documentation, independent implementation knowledge, and/or independently verified sample files. See `docs/SOURCES.md` in the package source for the source policy and reference notes.
 
 [Table of Contents](#table-of-contents)
 
