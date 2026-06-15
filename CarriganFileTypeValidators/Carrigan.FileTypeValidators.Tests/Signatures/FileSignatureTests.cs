@@ -96,4 +96,49 @@ public class FileSignatureTests
 
         Assert.False(result);
     }
+
+
+    [Fact]
+    public void BlackListMatch_MultipleSignatures_AllMatching_ReturnsTrue()
+    {
+        FileSignature fileSignature = new(
+            [
+                new ByteSignature("RIFF"u8.ToArray(), 0),
+                new ByteSignature("WEBP"u8.ToArray(), 8)
+            ],
+            new FileExtension(".webp"));
+
+        byte[] data = [0x52, 0x49, 0x46, 0x46, 0x06, 0x00, 0x00, 0x00, 0x57, 0x45, 0x42, 0x50];
+        bool result = fileSignature.BlackListMatch(data, new FileExtension(".png"));
+
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void BlackListMatch_MultipleSignatures_OnlyFirstMatching_ReturnsFalse()
+    {
+        FileSignature fileSignature = new(
+            [
+                new ByteSignature("RIFF"u8.ToArray(), 0),
+                new ByteSignature("WEBP"u8.ToArray(), 8)
+            ],
+            new FileExtension(".webp"));
+
+        byte[] data = [0x52, 0x49, 0x46, 0x46, 0x06, 0x00, 0x00, 0x00, 0x57, 0x41, 0x56, 0x45];
+        bool result = fileSignature.BlackListMatch(data, new FileExtension(".png"));
+
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void BlackListMatch_IncorrectDataMatchingExtension_ReturnsTrue()
+    {
+        ByteSignature signature = new("BM"u8.ToArray());
+        FileSignature fileSignature = new(signature, new FileExtension(".bmp"));
+
+        byte[] data = [0xFF, 0xFF, 0x42, 0x4D];
+        bool result = fileSignature.BlackListMatch(data, new FileExtension(".bmp"));
+
+        Assert.True(result);
+    }
 }

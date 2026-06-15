@@ -12,6 +12,9 @@ public class TiffValidatorTests : ValidatorTestBase
 
     protected override IEnumerable<SingleSample> Samples =>
     [
+        new ([0x49, 0x20, 0x49], null, new("tif")),
+        new ([0x49, 0x20, 0x49], null, new("tiff")),
+
         new ([0x49, 0x49, 0x2A, 0x00], null, new("tif")),
         new ([0x49, 0x49, 0x2A, 0x00], null, new("tiff")),
 

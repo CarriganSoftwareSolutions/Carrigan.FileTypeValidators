@@ -9,7 +9,7 @@
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-
+    <EnablePackageValidation>true</EnablePackageValidation>
 
     <IsPackable>true</IsPackable>
   </PropertyGroup>
@@ -19,9 +19,12 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">True</GeneratePackageOnBuild>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <Title>Carrigan.FileTypeValidators</Title>
+    <PackageProjectUrl>https://github.com/CarriganSoftwareSolutions/Carrigan.FileTypeValidators</PackageProjectUrl>
+    <PackageReleaseNotes>Initial prerelease with built-in validators for common image file formats.</PackageReleaseNotes>
 
     <Description>
-      Carrigan.FileTypeValidators allows for white listing and black listing files based on file extension and matching file type definitions
+      Carrigan.FileTypeValidators allows for allow-listing and deny-listing files based on file extension and matching file type definitions
     </Description>
     <PackageTags>
       file;type;validation;

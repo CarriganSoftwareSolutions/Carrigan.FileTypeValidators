@@ -1,24 +1,62 @@
-﻿using Carrigan.Core.Extensions;
+using Carrigan.Core.Extensions;
 
 namespace Carrigan.FileTypeValidators.Signatures;
 
+/// <summary>
+/// Represents a signature fragment that checks for a specific sequence of bytes at a given offset in the data.
+/// </summary>
 public class ByteSignature : ISignatureFragment
 {
+    /// <summary>
+    /// Gets the offset at which to check for the byte sequence.
+    /// </summary>
+    private int Offset { get; }
+
+    /// <summary>
+    /// Gets the sequence of bytes to check for.
+    /// </summary>
+    private IReadOnlyCollection<byte> Signature { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the ByteSignature class with the specified byte sequence and offset.
+    /// </summary>
+    /// <param name="signature">
+    /// The sequence of bytes to check for. Cannot be null or empty.
+    /// </param>
+    /// <param name="offset">
+    /// The offset at which to check for the byte sequence. Must be non-negative.
+    /// </param>
     public ByteSignature(IEnumerable<byte> signature, int offset)
     {
+        ArgumentNullException.ThrowIfNull(signature);
+        ArgumentOutOfRangeException.ThrowIfNegative(offset);
+
+        byte[] signatureArray = [.. signature];
+        if (signatureArray.Length == 0)
+            throw new ArgumentException("The signature must contain at least one byte.", nameof(signature));
+
         Offset = offset;
-        Signature= signature;
+        Signature = signatureArray;
     }
 
-    public ByteSignature(IEnumerable<byte> signature)
+    /// <summary>
+    /// Initializes a new instance of the ByteSignature class with the specified byte sequence and an offset of 0.
+    /// </summary>
+    /// <param name="signature">
+    /// The sequence of bytes to check for. Cannot be null or empty.
+    /// </param>
+    public ByteSignature(IEnumerable<byte> signature) : this(signature, 0)
+    { }
+
+    /// <summary>
+    /// Determines whether the specified data matches the byte signature at the defined offset.
+    /// </summary>
+    /// <param name="data">The data to check.</param>
+    /// <returns>true if the data matches the signature; otherwise, false.</returns>
+    public bool IsMatch(IEnumerable<byte> data)
     {
-        Offset = 0;
-        Signature = signature;
+        ArgumentNullException.ThrowIfNull(data);
+
+        return data.Skip(Offset).StartsWith(Signature);
     }
-
-    private int Offset { get; }
-    private IEnumerable<byte> Signature { get; }
-
-    public bool IsMatch(IEnumerable<byte> data) =>
-        data.Skip(Offset).StartsWith(Signature);
 }

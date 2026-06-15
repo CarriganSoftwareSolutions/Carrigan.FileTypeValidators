@@ -50,13 +50,14 @@ public class TrailersTests
     }
 
     [Fact]
-    public void NullTrailerTest()
-    {
-        byte[] data = [1, 2, 3];
-        ByteTrailer signature = new(""u8.ToArray(), 0);
+    public void EmptyTrailerTest() =>
+        Assert.Throws<ArgumentException>(() =>
+        {
+            byte[] data = [1, 2, 3];
+            ByteTrailer signature = new(""u8.ToArray(), 0);
 
-        Assert.True(signature.IsMatch(data));
-    }
+            Assert.True(signature.IsMatch(data));
+        });
 
     [Fact]
     public void NullDataTrailerTest()

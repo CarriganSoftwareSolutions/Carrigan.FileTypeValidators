@@ -1,16 +1,18 @@
 cff-version: 1.2.0
-message: "If you use Carrigan.CarriganFileTypeValidators, please cite it using the metadata below."
+message: "If you use Carrigan.FileTypeValidators, please cite it using the metadata below."
 type: software
-title: "Carrigan.CarriganFileTypeValidators"
+title: "Carrigan.FileTypeValidators"
 authors:
   - family-names: "Carrigan"
     given-names: "Jonathan"
     alias: "Carrigan Software Solutions LLC"
-version: "0.1.0"
-date-released: "2026-06-09"
+version: "0.1.0-alpha"
+date-released: "2026-06-14"
 repository-code: "https://github.com/CarriganSoftwareSolutions/Carrigan.FileTypeValidators"
 url: "https://github.com/CarriganSoftwareSolutions/Carrigan.FileTypeValidators"
-abstract: "Carrigan.FileTypeValidators allows for white listing and black listing files based on file extension and matching file type definitions"
+abstract: "Carrigan.FileTypeValidators allows for allow-listing and deny-listing files based on file extension, MIME type, and matching file type definitions"
 keywords:
   - "file types"
+  - "file signatures"
+  - "file validation"
 license: "Apache-2.0"

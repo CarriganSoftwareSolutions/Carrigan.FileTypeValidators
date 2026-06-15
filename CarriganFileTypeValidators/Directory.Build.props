@@ -14,6 +14,7 @@
     <Copyright>© $(_CurrentYear) $(Company)</Copyright>
 
     <RepositoryUrl>https://github.com/CarriganSoftwareSolutions/Carrigan.FileTypeValidators</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 
 

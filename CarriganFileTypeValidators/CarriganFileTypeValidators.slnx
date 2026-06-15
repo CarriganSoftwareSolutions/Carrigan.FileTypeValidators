@@ -1,5 +1,8 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path="../.github/workflows/cla-assent-check.yml" />
+    <File Path="../.github/workflows/publish-nuget.yml" />
+    <File Path="../.github/workflows/pull-request-validation.yml" />
     <File Path="../.vsspell/IgnoredWords.dic" />
     <File Path="../CITATION.cff" />
     <File Path="../CLA.md" />

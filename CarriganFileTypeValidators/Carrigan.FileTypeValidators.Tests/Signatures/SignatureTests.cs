@@ -43,13 +43,14 @@ public class SignatureTests
     }
 
     [Fact]
-    public void NullSignatureTest()
-    {
-        byte[] data = [1, 2, 3];
-        ByteSignature signature = new([], 0);
+    public void EmptySignatureTest() => 
+        Assert.Throws<ArgumentException>(() =>
+        {
+            byte[] data = [1, 2, 3];
+            ByteSignature signature = new([], 0);
 
-        Assert.True(signature.IsMatch(data));
-    }
+            Assert.True(signature.IsMatch(data));
+        });
 
     [Fact]
     public void NullDataSignatureTest()
