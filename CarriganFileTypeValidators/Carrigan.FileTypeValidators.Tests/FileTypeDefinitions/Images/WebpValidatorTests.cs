@@ -11,7 +11,7 @@ public class WebpValidatorTests : ValidatorTestBase
 
     protected override IEnumerable<SingleSample> Samples =>
     [
-        new ([..FromReadOnlySpan("RIFF"u8), ..XNulls(4), ..FromReadOnlySpan("WEBP"u8)], null, new("webp")),
+        new ([.. FromReadOnlySpan("RIFF"u8), .. XNulls(4), .. FromReadOnlySpan("WEBP"u8)], null, new("webp")),
     ];
 
     protected override IEnumerable<MimeType> MimeTypes =>

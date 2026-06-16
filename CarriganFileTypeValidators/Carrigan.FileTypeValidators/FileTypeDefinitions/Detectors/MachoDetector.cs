@@ -11,7 +11,7 @@ public sealed class MachoDetector : FileTypeDetectorBase
     [
         new FileExtension("dylib"),
         new FileExtension("bundle"),
-        new FileExtension("macho")
+        new FileExtension("o")
     ];
 
     /// <summary>
@@ -19,24 +19,34 @@ public sealed class MachoDetector : FileTypeDetectorBase
     /// </summary>
     private static readonly IEnumerable<FileSignature> signatures =
     [
-        // https://developer.apple.com/documentation/kernel/mach_header
+        //https://github.com/apple/darwin-xnu/blob/main/EXTERNAL_HEADERS/mach-o/loader.h
         new
         (
-            signatureFragments: new ByteSignature("MH_CIGAM"u8),
+            signatureFragments: new ByteSignature([0xFE, 0xED, 0xFA, 0xCE]),
             fileExtensions: fileExtensions
         ),
         new
         (
-            signatureFragments: new ByteSignature("MH_MAGIC"u8),
+            signatureFragments: new ByteSignature([0xCE, 0xFA, 0xED, 0xFE]),
             fileExtensions: fileExtensions
-        )
+        ),
+        new
+        (
+            signatureFragments: new ByteSignature([0xFE, 0xED, 0xFA, 0xCF]),
+            fileExtensions: fileExtensions
+        ),
+        new
+        (
+            signatureFragments: new ByteSignature([0xCF, 0xFA, 0xED, 0xFE]),
+            fileExtensions: fileExtensions
+        ),
     ];
 
     /// <summary>
     /// Gets the MIME types commonly associated with Mach-O files.
     /// No MIME types are defined because this detector is intended to use signatures and extensions only.
     /// </summary>
-    public override IEnumerable<MimeType> MimeTypes => [];
+    public override IEnumerable<MimeType> MimeTypes => [new("application/x-mach-binary")];
 
     /// <summary>
     /// Gets the known Mach-O file signatures.

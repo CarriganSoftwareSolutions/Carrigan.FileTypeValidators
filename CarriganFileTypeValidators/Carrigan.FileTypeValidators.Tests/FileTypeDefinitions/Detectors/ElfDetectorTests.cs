@@ -11,7 +11,7 @@ public class ElfDetectorTests : ValidatorTestBase
 
     protected override IEnumerable<SingleSample> Samples =>
     [
-        new([0x7F, 0x45, 0x4C, 0x46], [], new("elf"))
+        new ([0x7F, 0x45, 0x4C, 0x46], [], new("elf"))
     ];
 
     protected override IEnumerable<MimeType> MimeTypes =>

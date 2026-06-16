@@ -10,6 +10,9 @@ namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions;
 
 public class SingleSample
 {
+    protected static byte?[]? FromReadOnlySpan(ReadOnlySpan<byte> bytes) => 
+        [.. bytes.ToArray().AsEnumerable().Select(aByte => (byte?)aByte)];
+
     /// <summary>
     /// LeadBytes represent the known bytes in the leading bytes file signature.
     /// Nulls represent wild cards in the signature.

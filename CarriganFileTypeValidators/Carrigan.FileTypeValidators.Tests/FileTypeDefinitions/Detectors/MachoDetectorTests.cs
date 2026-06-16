@@ -8,17 +8,19 @@ public class MachoDetectorTests : ValidatorTestBase
 {
     protected override FileTypeValidatorBase ValidatorDefinition =>
         new MachoDetector();
+    private IEnumerable<FileExtension> FileExtensions = [new("dylib"), new("bundle"), new("o")];
 
     protected override IEnumerable<SingleSample> Samples =>
     [
-        new([0xFE, 0xED, 0xFA], [], new("dylib")),
-        new([0xFE, 0xED, 0xFA], [], new("macho")),
-        new([0xFA, 0xED, 0xFE], [], new("dylib")),
-        new([0xFE, 0xED, 0xFA], [], new("macho")),
+        //https://en.wikipedia.org/wiki/Mach-O#Multi-architecture_binaries
+        .. FileExtensions.Select(fileExt => new SingleSample([0xFE, 0xED, 0xFA, 0xCE], [], fileExt)),
+        .. FileExtensions.Select(fileExt => new SingleSample([0xCE, 0xFA, 0xED, 0xFE], [], fileExt)),
+        .. FileExtensions.Select(fileExt => new SingleSample([0xFE, 0xED, 0xFA, 0xCF], [], fileExt)),
+        .. FileExtensions.Select(fileExt => new SingleSample([0xCF, 0xFA, 0xED, 0xFE], [], fileExt))
     ];
 
     protected override IEnumerable<MimeType> MimeTypes =>
     [
-        new("application", "octet-stream")
+        new("application/x-mach-binary")
     ];
 }
