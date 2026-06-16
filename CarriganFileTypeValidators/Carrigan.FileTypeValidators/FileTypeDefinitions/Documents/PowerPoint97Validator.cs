@@ -2,7 +2,7 @@ using Carrigan.FileTypeValidators.Signatures;
 
 namespace Carrigan.FileTypeValidators.FileTypeDefinitions.Documents;
 
-public class PowerPoint97Validator : FileTypeValidatorBase
+public class PowerPoint97Validator : Office97ValidatorBase
 {
     private const int OleSubheaderOffset = 0x200;
 
@@ -21,9 +21,7 @@ public class PowerPoint97Validator : FileTypeValidatorBase
     // GCK File Signatures Table copyright © 2002-2026 Gary C. Kessler.
     // Used with attribution. This project does not redistribute, vendor, scrape,
     // bulk-import, or mechanically translate the GCK File Signatures Table.
-    private static readonly ByteSignature LeadingBytes = new([0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1]);
-
-    private static readonly ISignatureFragment[][] SubHeaders =
+    internal static readonly ISignatureFragment[][] SubHeaders =
     [
         [
             new ByteSignature([0xFD, 0xFF, 0xFF, 0xFF], OleSubheaderOffset),

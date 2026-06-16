@@ -21,7 +21,7 @@
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <Title>Carrigan.FileTypeValidators</Title>
     <PackageProjectUrl>https://github.com/CarriganSoftwareSolutions/Carrigan.FileTypeValidators</PackageProjectUrl>
-    <PackageReleaseNotes>Initial prerelease with built-in validators for common image and legacy document file formats plus executable detector definitions.</PackageReleaseNotes>
+    <PackageReleaseNotes>Initial prerelease with built-in validators for common image, PDF, legacy Office, Office 2007 Open XML, Outlook, and Publisher formats plus executable detector definitions.</PackageReleaseNotes>
 
     <Description>
       Carrigan.FileTypeValidators allows for allow-listing and deny-listing files based on file extension and matching file type definitions

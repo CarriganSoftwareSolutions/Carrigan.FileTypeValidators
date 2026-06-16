@@ -44,6 +44,10 @@ notice files, upstream project repositories, and source websites.
     External reference for OLE Compound File Binary container structure
     https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-cfb/
 
+- Microsoft, Open Packaging Conventions overview
+    External reference for Office Open XML / OPC package structure
+    https://learn.microsoft.com/en-us/previous-versions/windows/desktop/opc/open-packaging-conventions-overview
+
 - Microsoft, PowerPoint (.ppt) Binary File Format
     External reference for the legacy PowerPoint binary file format
     https://learn.microsoft.com/en-us/openspecs/office_file_formats/ms-ppt/
@@ -53,8 +57,12 @@ notice files, upstream project repositories, and source websites.
     https://learn.microsoft.com/en-us/openspecs/exchange_server_protocols/ms-oxmsg/
 
 - IANA Media Types Registry
-    External reference for registered MIME/media type names
+    External reference for registered MIME/media type names, including Office Open XML and PDF media types
     https://www.iana.org/assignments/media-types/
+
+- RFC 8118, The application/pdf Media Type
+    External reference for the PDF media type registration
+    https://www.rfc-editor.org/rfc/rfc8118.html
 
 - W3C mirror of RFC 1341, Message/rfc822 content type
     External reference for the message/rfc822 MIME type
@@ -68,6 +76,10 @@ notice files, upstream project repositories, and source websites.
 - Apache Tika / DigiPres MIME type reference
     External reference for application/x-mspublisher
     https://www.digipres.org/formats/sources/tika/formats/#application/x-mspublisher
+
+- Mime Types Database
+    External reference for older/non-standard PDF MIME type strings used as compatibility fallbacks
+    https://mimeapplication.net/
 
 Unless otherwise expressly stated in a given package or distribution, references
 to third-party dependencies in this package generally refer to dependencies

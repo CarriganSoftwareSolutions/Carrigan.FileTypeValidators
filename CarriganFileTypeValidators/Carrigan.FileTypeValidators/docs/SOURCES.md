@@ -26,6 +26,48 @@ General container references:
 - Microsoft, Compound File Binary File Format: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-cfb/
 - Gary C. Kessler, GCK's File Signatures Table: https://www.garykessler.net/library/file_sigs_GCK_latest.html
 
+
+### Office 2007 Open XML validators
+
+`Word2007Validator`, `Excel2007Validator`, and `PowerPoint2007Validator` identify the basic Office 2007+ Open XML document forms implemented by this package: DOCX, XLSX, and PPTX. These formats are ZIP/OPC-based packages, and the validators use the ZIP local-file header and end-of-central-directory signature implemented in `Office2007ValidatorBase`.
+
+The validators also accept the older Office MIME types as compatibility fallbacks because browser/client-provided MIME types are caller-supplied metadata and may be reported using older Office family media types. The signature and extension checks still have to match the specific validator.
+
+When constructed with `allowPasswordProtectedFiles: true`, these validators also accept the OLE compound-file signatures documented by Kessler for password-protected Office 2007 documents. Password-protected Office 2007 documents are rejected by default.
+
+Signature references:
+
+- Gary C. Kessler, GCK's File Signatures Table: https://www.garykessler.net/library/file_sigs_GCK_latest.html
+- Microsoft, Open Packaging Conventions overview: https://learn.microsoft.com/en-us/previous-versions/windows/desktop/opc/open-packaging-conventions-overview
+
+MIME type references:
+
+- `application/vnd.openxmlformats-officedocument.wordprocessingml.document`: https://www.iana.org/assignments/media-types/application/vnd.openxmlformats-officedocument.wordprocessingml.document
+- `application/msword`: https://www.iana.org/assignments/media-types/application/msword
+- `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`: https://www.iana.org/assignments/media-types/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+- `application/vnd.ms-excel`: https://www.iana.org/assignments/media-types/application/vnd.ms-excel
+- `application/vnd.openxmlformats-officedocument.presentationml.presentation`: https://www.iana.org/assignments/media-types/application/vnd.openxmlformats-officedocument.presentationml.presentation
+- `application/vnd.ms-powerpoint`: https://www.iana.org/assignments/media-types/application/vnd.ms-powerpoint
+
+### PDF validator
+
+`PdfValidator` identifies PDF files using the leading `%PDF-` magic number and the implemented end-of-file trailer variants. The primary registered MIME type is `application/pdf`. The validator also accepts older/non-standard PDF MIME strings as compatibility fallbacks, while still requiring a matching `.pdf` extension and PDF byte signature.
+
+Signature references:
+
+- Gary C. Kessler, GCK's File Signatures Table: https://www.garykessler.net/library/file_sigs_GCK_latest.html
+- IANA, `application/pdf` media type registration: https://www.iana.org/assignments/media-types/application/pdf
+- RFC 8118, The `application/pdf` Media Type: https://www.rfc-editor.org/rfc/rfc8118.html
+
+MIME type references:
+
+- `application/pdf`: https://www.iana.org/assignments/media-types/application/pdf
+- `application/x-pdf`: https://mimeapplication.net/x-pdf
+- `application/vnd.pdf`: https://mimeapplication.net/applications-vnd-pdf
+- `application/acrobat`: https://mimeapplication.net/acrobat
+- `text/pdf`: https://mimeapplication.net/text-pdf
+- `text/x-pdf`: https://mimeapplication.net/text-x-pdf
+
 ### Word 97-2003 validator
 
 `Word97Validator` identifies legacy Word binary documents/templates using the OLE compound-file header and Word subheader implemented in the validator.
