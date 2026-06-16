@@ -1,5 +1,6 @@
 ﻿
 using Carrigan.FileTypeValidators.FileTypeDefinitions.Images;
+using Carrigan.FileTypeValidators.FileTypeDefinitions.Documents;
 using Carrigan.FileTypeValidators.FileTypeDefinitions;
 
 
@@ -41,6 +42,48 @@ public class FileTypeDefinitionTests
     public void AllFileExtensionsLogicTestWebpHasOne()
     {
         FileTypeValidatorBase baseClass = new WebpValidator();
+        Assert.Single(baseClass.AllFileExtensions);
+    }
+
+    [Fact]
+    public void AllFileExtensionsLogicTestWord97HasTwo()
+    {
+        FileTypeValidatorBase baseClass = new Word97Validator();
+        Assert.Equal(2, baseClass.AllFileExtensions.Count());
+    }
+
+    [Fact]
+    public void AllFileExtensionsLogicTestExcel97HasThree()
+    {
+        FileTypeValidatorBase baseClass = new Excel97Validator();
+        Assert.Equal(3, baseClass.AllFileExtensions.Count());
+    }
+
+    [Fact]
+    public void AllFileExtensionsLogicTestPowerPoint97HasFour()
+    {
+        FileTypeValidatorBase baseClass = new PowerPoint97Validator();
+        Assert.Equal(4, baseClass.AllFileExtensions.Count());
+    }
+
+    [Fact]
+    public void AllFileExtensionsLogicTestOutlookExpressHasOne()
+    {
+        FileTypeValidatorBase baseClass = new OutlookExpressValidator();
+        Assert.Single(baseClass.AllFileExtensions);
+    }
+
+    [Fact]
+    public void AllFileExtensionsLogicTestOutlookHasOne()
+    {
+        FileTypeValidatorBase baseClass = new OutlookValidator();
+        Assert.Single(baseClass.AllFileExtensions);
+    }
+
+    [Fact]
+    public void AllFileExtensionsLogicTestPublisher97HasOne()
+    {
+        FileTypeValidatorBase baseClass = new Publisher97Validator();
         Assert.Single(baseClass.AllFileExtensions);
     }
 }

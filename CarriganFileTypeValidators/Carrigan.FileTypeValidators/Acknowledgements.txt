@@ -40,6 +40,35 @@ notice files, upstream project repositories, and source websites.
 
 - https://www.loc.gov/preservation/digital/formats/fdd/fdd000328.shtml
 
+- Microsoft, Compound File Binary File Format
+    External reference for OLE Compound File Binary container structure
+    https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-cfb/
+
+- Microsoft, PowerPoint (.ppt) Binary File Format
+    External reference for the legacy PowerPoint binary file format
+    https://learn.microsoft.com/en-us/openspecs/office_file_formats/ms-ppt/
+
+- Microsoft, Outlook Item (.msg) File Format
+    External reference for the Outlook MSG file format
+    https://learn.microsoft.com/en-us/openspecs/exchange_server_protocols/ms-oxmsg/
+
+- IANA Media Types Registry
+    External reference for registered MIME/media type names
+    https://www.iana.org/assignments/media-types/
+
+- W3C mirror of RFC 1341, Message/rfc822 content type
+    External reference for the message/rfc822 MIME type
+    https://www.w3.org/Protocols/rfc1341/7_3_Message.html
+
+- Library of Congress Format Description Documents
+    External references for documented file format descriptions
+    https://www.loc.gov/preservation/digital/formats/fdd/fdd000379.shtml
+    https://www.loc.gov/preservation/digital/formats/fdd/fdd000510.shtml
+
+- Apache Tika / DigiPres MIME type reference
+    External reference for application/x-mspublisher
+    https://www.digipres.org/formats/sources/tika/formats/#application/x-mspublisher
+
 Unless otherwise expressly stated in a given package or distribution, references
 to third-party dependencies in this package generally refer to dependencies
 that are restored, resolved, or loaded separately through normal package or

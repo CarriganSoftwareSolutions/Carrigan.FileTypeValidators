@@ -16,6 +16,92 @@ Gary C. Kessler's page states that it is copyright © 2002-2026 Gary C. Kessler 
 
 This project does not include, redistribute, scrape, vendor, bulk-import, or mechanically translate either table. Do not bulk-import rows from those tables into this repository without a license or written permission that allows redistribution under terms compatible with this project.
 
+
+## Document validators
+
+The legacy Microsoft Office document validators identify OLE Compound File Binary containers with a leading `D0 CF 11 E0 A1 B1 1A E1` header and an additional subheader at byte offset `0x200` where applicable. The `0x200` value is hexadecimal and corresponds to decimal offset `512`.
+
+General container references:
+
+- Microsoft, Compound File Binary File Format: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-cfb/
+- Gary C. Kessler, GCK's File Signatures Table: https://www.garykessler.net/library/file_sigs_GCK_latest.html
+
+### Word 97-2003 validator
+
+`Word97Validator` identifies legacy Word binary documents/templates using the OLE compound-file header and Word subheader implemented in the validator.
+
+Signature references:
+
+- Gary C. Kessler, GCK's File Signatures Table: https://www.garykessler.net/library/file_sigs_GCK_latest.html
+
+MIME type references:
+
+- `application/msword`: https://www.iana.org/assignments/media-types/application/msword
+
+### Excel 97-2003 validator
+
+`Excel97Validator` identifies legacy Excel binary workbooks/templates/add-ins using the OLE compound-file header and the BIFF8 workbook subheader implemented in the validator.
+
+Signature references:
+
+- Gary C. Kessler, GCK's File Signatures Table: https://www.garykessler.net/library/file_sigs_GCK_latest.html
+- Library of Congress, Microsoft Excel 97-2003 Workbook (xls), BIFF8: https://www.loc.gov/preservation/digital/formats/fdd/fdd000510.shtml
+
+MIME type references:
+
+- `application/vnd.ms-excel`: https://www.iana.org/assignments/media-types/application/vnd.ms-excel
+
+### PowerPoint 97-2003 validator
+
+`PowerPoint97Validator` identifies legacy PowerPoint binary presentations/templates/shows/add-ins using the OLE compound-file header and PowerPoint subheaders implemented in the validator.
+
+Signature references:
+
+- Gary C. Kessler, GCK's File Signatures Table: https://www.garykessler.net/library/file_sigs_GCK_latest.html
+- Microsoft, PowerPoint (.ppt) Binary File Format: https://learn.microsoft.com/en-us/openspecs/office_file_formats/ms-ppt/
+
+MIME type references:
+
+- `application/vnd.ms-powerpoint`: https://www.iana.org/assignments/media-types/application/vnd.ms-powerpoint
+
+### Outlook MSG validator
+
+`OutlookValidator` identifies Outlook MSG files using the OLE compound-file header and the CFB root-entry subheader implemented in the validator. The root-entry marker is not unique to MSG files, so this validator should be understood as an extension/MIME/signature validator rather than a full MSG parser.
+
+Signature references:
+
+- Gary C. Kessler, GCK's File Signatures Table: https://www.garykessler.net/library/file_sigs_GCK_latest.html
+- Microsoft, Outlook Item (.msg) File Format: https://learn.microsoft.com/en-us/openspecs/exchange_server_protocols/ms-oxmsg/
+- Library of Congress, Microsoft Outlook Item (MSG): https://www.loc.gov/preservation/digital/formats/fdd/fdd000379.shtml
+
+MIME type references:
+
+- `application/vnd.ms-outlook`: https://www.loc.gov/preservation/digital/formats/fdd/fdd000379.shtml
+
+### Outlook Express EML validator
+
+`OutlookExpressValidator` identifies EML-style message files using the leading message bytes implemented in the validator.
+
+Signature references:
+
+- Gary C. Kessler, GCK's File Signatures Table: https://www.garykessler.net/library/file_sigs_GCK_latest.html
+
+MIME type references:
+
+- `message/rfc822`: https://www.w3.org/Protocols/rfc1341/7_3_Message.html
+
+### Publisher 97 validator
+
+`Publisher97Validator` identifies legacy Publisher files using the OLE compound-file header and Publisher subheader implemented in the validator.
+
+Signature references:
+
+- Gary C. Kessler, GCK's File Signatures Table: https://www.garykessler.net/library/file_sigs_GCK_latest.html
+
+MIME type references:
+
+- `application/x-mspublisher`: https://www.digipres.org/formats/sources/tika/formats/#application/x-mspublisher
+
 ## Detector definitions
 
 Detector definitions are intended for deny-list use. They may be broader than normal validators because they are meant to identify dangerous executable or executable-adjacent content. `FileTypeDetectorBase` disables MIME type checks during allow-list checks so that MIME-only matches do not accidentally make detector definitions useful as normal allow-list validators.

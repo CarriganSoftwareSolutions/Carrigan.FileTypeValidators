@@ -43,6 +43,15 @@ Carrigan.FileTypeValidators currently includes built-in validators for common im
 - TIFF / TIF, including BigTIFF signatures
 - WebP
 
+It also includes built-in validators for legacy document formats:
+
+- Word 97-2003 / DOC / DOT
+- Excel 97-2003 / XLS / XLT / XLA
+- PowerPoint 97-2003 / PPT / POT / PPS / PPA
+- Outlook MSG
+- Outlook Express / EML
+- Publisher 97 / PUB
+
 It also includes detector definitions intended for deny-list scenarios:
 
 - Windows executable-style files
@@ -238,7 +247,7 @@ Do not rely on this package alone as your only upload security control. Uploaded
 
 ## Signature Sources
 
-Carrigan.FileTypeValidators includes a small set of built-in validators for common image file formats.
+Carrigan.FileTypeValidators includes a small set of built-in validators for common image and legacy document file formats.
 
 Gary C. Kessler's GCK File Signatures Table and the SEARCH-hosted GCK File Signature Table are acknowledged as useful external research and comparison references. Kessler's table is attributed in the package `NOTICE.txt` and `Acknowledgements.txt` files.
 
