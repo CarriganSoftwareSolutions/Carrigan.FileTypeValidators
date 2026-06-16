@@ -6,7 +6,7 @@ namespace Carrigan.FileTypeValidators.FileTypeDefinitions.Images;
 /// TIFF (Tagged Image File Format) is a flexible image format that can store a wide range of image types, including photographs, line art, 
 /// and scanned documents. It supports both lossless and lossy compression methods, making it suitable for various applications.
 /// </summary>
-public class TiffValidator : FileTypeDefinition
+public class TiffValidator : FileTypeValidatorBase
 {
     /// <summary>
     /// The TIFF file format is defined by specific byte signatures at the beginning of the file. 

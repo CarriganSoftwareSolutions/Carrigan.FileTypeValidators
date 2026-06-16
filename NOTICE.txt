@@ -19,3 +19,5 @@ Attribution notice for the Kessler table:
 Additional external reference:
 - GCK File Signature Table, powered by SEARCH: https://filesig.search.org/
 - Library of Congress, BigTIFF File Format Description: https://www.loc.gov/preservation/digital/formats/fdd/fdd000328.shtml
+- https://www.digipres.org/formats/sources/wikidata/formats/
+- https://www.iana.org/assignments/media-types/media-types.xhtml

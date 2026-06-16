@@ -14,12 +14,12 @@ public class FileTypeValidator
     /// Gets the collection of allowed file type definitions, indexed by their associated file extensions.
     /// If null or empty, no file types are considered allowed.
     /// </summary>
-    private readonly Dictionary<FileExtension, FileTypeDefinition>? Allowed;
+    private readonly Dictionary<FileExtension, FileTypeValidatorBase>? Allowed;
 
     /// <summary>
     /// Gets the collection of disallowed file type definitions. If null or empty, no file types are considered disallowed.
     /// </summary>
-    private readonly IEnumerable<FileTypeDefinition>? Disallowed;
+    private readonly IEnumerable<FileTypeValidatorBase>? Disallowed;
 
     /// <summary>
     /// Initializes a new instance of the FileTypeValidator class with the specified allowed and disallowed file type definitions.
@@ -31,7 +31,7 @@ public class FileTypeValidator
     /// <param name="disallowed">
     /// The collection of disallowed file type definitions. If null or empty, no file types are considered disallowed.
     /// </param>
-    public FileTypeValidator(IEnumerable<FileTypeDefinition>? allowed = null, IEnumerable<FileTypeDefinition>? disallowed = null)
+    public FileTypeValidator(IEnumerable<FileTypeValidatorBase>? allowed = null, IEnumerable<FileTypeValidatorBase>? disallowed = null)
     { 
         if (allowed.IsNotNullOrEmpty())
             Allowed = allowed
@@ -39,7 +39,7 @@ public class FileTypeValidator
                 (
                     allowable => allowable
                         .AllFileExtensions
-                        .Select(fileExtension => new KeyValuePair<FileExtension, FileTypeDefinition>(fileExtension, allowable))
+                        .Select(fileExtension => new KeyValuePair<FileExtension, FileTypeValidatorBase>(fileExtension, allowable))
                 )
                 .ToDictionary();
         else

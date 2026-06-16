@@ -5,7 +5,7 @@ namespace Carrigan.FileTypeValidators.FileTypeDefinitions.Images;
 /// <summary>
 /// Validator for Bitmap (BMP) image files.
 /// </summary>
-public class BitmapValidator : FileTypeDefinition
+public class BitmapValidator : FileTypeValidatorBase
 {
     /// <summary>
     /// Defines the file signatures and MIME types associated with Bitmap (BMP) image files.

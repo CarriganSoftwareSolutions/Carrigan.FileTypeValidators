@@ -6,7 +6,7 @@ namespace Carrigan.FileTypeValidators.FileTypeDefinitions.Images;
 /// <summary>
 /// PNG (Portable Network Graphics) is a widely used image format that supports lossless compression and transparency.
 /// </summary>
-public class PngValidator : FileTypeDefinition
+public class PngValidator : FileTypeValidatorBase
 {
     /// <summary>
     /// The PNG file format is defined by specific byte signatures at the beginning and end of the file.

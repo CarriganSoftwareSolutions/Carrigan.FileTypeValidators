@@ -5,11 +5,9 @@ using Carrigan.FileTypeValidators.Signatures;
 
 namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions.Images;
 
-//IGNORE SPELLING: bmx bmp
-
 public class BitmapValidatorTests : ValidatorTestBase
 {
-    protected override FileTypeDefinition ValidatorDefinition =>
+    protected override FileTypeValidatorBase ValidatorDefinition =>
         new BitmapValidator();
 
     protected override IEnumerable<SingleSample> Samples =>

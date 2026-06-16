@@ -23,7 +23,7 @@ public class MimeTypeValidatorTests
     private static readonly MimeType tiffMime = new ("image", "tiff");
     private static readonly MimeType webpMime = new ("image", "webp");
 
-    private static bool FileTypeTest(byte[] data, string fileExtension, MimeType mimeData, FileTypeDefinition fileTypeDefinition)
+    private static bool FileTypeTest(byte[] data, string fileExtension, MimeType mimeData, FileTypeValidatorBase fileTypeDefinition)
     {
         FileTypeValidator validator = new([fileTypeDefinition]);
         return validator.IsValid(data, mimeData, new(fileExtension));

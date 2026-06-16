@@ -7,7 +7,7 @@ public class FileSignatureTests
     [Fact]
     public void Validate_SingleSignatureAndExtension_MatchingData_ReturnsTrue()
     {
-        ByteSignature signature = new("BM"u8.ToArray());
+        ByteSignature signature = new("BM"u8);
         FileSignature fileSignature = new(signature, new FileExtension(".bmp"));
 
         byte[] data = [0x42, 0x4D, 0xFF, 0xFF];
@@ -19,7 +19,7 @@ public class FileSignatureTests
     [Fact]
     public void Validate_SingleSignatureAndExtension_NonMatchingData_ReturnsFalse()
     {
-        ByteSignature signature = new("BM"u8.ToArray());
+        ByteSignature signature = new("BM"u8);
         FileSignature fileSignature = new(signature, new FileExtension(".bmp"));
 
         byte[] data = [0xFF, 0xFF, 0x42, 0x4D];
@@ -45,8 +45,8 @@ public class FileSignatureTests
     {
         FileSignature fileSignature = new(
             [
-                new ByteSignature("RIFF"u8.ToArray(), 0),
-                new ByteSignature("WEBP"u8.ToArray(), 8)
+                new ByteSignature("RIFF"u8, 0),
+                new ByteSignature("WEBP"u8, 8)
             ],
             new FileExtension(".webp"));
 
@@ -61,8 +61,8 @@ public class FileSignatureTests
     {
         FileSignature fileSignature = new(
             [
-                new ByteSignature("RIFF"u8.ToArray(), 0),
-                new ByteSignature("WEBP"u8.ToArray(), 8)
+                new ByteSignature("RIFF"u8, 0),
+                new ByteSignature("WEBP"u8, 8)
             ],
             new FileExtension(".webp"));
 
@@ -103,8 +103,8 @@ public class FileSignatureTests
     {
         FileSignature fileSignature = new(
             [
-                new ByteSignature("RIFF"u8.ToArray(), 0),
-                new ByteSignature("WEBP"u8.ToArray(), 8)
+                new ByteSignature("RIFF"u8, 0),
+                new ByteSignature("WEBP"u8, 8)
             ],
             new FileExtension(".webp"));
 
@@ -119,8 +119,8 @@ public class FileSignatureTests
     {
         FileSignature fileSignature = new(
             [
-                new ByteSignature("RIFF"u8.ToArray(), 0),
-                new ByteSignature("WEBP"u8.ToArray(), 8)
+                new ByteSignature("RIFF"u8, 0),
+                new ByteSignature("WEBP"u8, 8)
             ],
             new FileExtension(".webp"));
 
@@ -133,7 +133,7 @@ public class FileSignatureTests
     [Fact]
     public void BlackListMatch_IncorrectDataMatchingExtension_ReturnsTrue()
     {
-        ByteSignature signature = new("BM"u8.ToArray());
+        ByteSignature signature = new("BM"u8);
         FileSignature fileSignature = new(signature, new FileExtension(".bmp"));
 
         byte[] data = [0xFF, 0xFF, 0x42, 0x4D];

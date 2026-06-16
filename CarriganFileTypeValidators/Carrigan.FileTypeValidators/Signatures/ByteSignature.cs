@@ -26,7 +26,7 @@ public class ByteSignature : ISignatureFragment
     /// <param name="offset">
     /// The offset at which to check for the byte sequence. Must be non-negative.
     /// </param>
-    public ByteSignature(IEnumerable<byte> signature, int offset)
+    public ByteSignature(IEnumerable<byte> signature, int offset = 0)
     {
         ArgumentNullException.ThrowIfNull(signature);
         ArgumentOutOfRangeException.ThrowIfNegative(offset);
@@ -40,12 +40,15 @@ public class ByteSignature : ISignatureFragment
     }
 
     /// <summary>
-    /// Initializes a new instance of the ByteSignature class with the specified byte sequence and an offset of 0.
+    /// Initializes a new instance of the ByteSignature class with the specified byte sequence and offset.
     /// </summary>
     /// <param name="signature">
     /// The sequence of bytes to check for. Cannot be null or empty.
     /// </param>
-    public ByteSignature(IEnumerable<byte> signature) : this(signature, 0)
+    /// <param name="offset">
+    /// The offset at which to check for the byte sequence. Must be non-negative.
+    /// </param>
+    public ByteSignature(ReadOnlySpan<byte> signature, int offset = 0) : this(signature.ToArray().AsEnumerable(), offset)
     { }
 
     /// <summary>

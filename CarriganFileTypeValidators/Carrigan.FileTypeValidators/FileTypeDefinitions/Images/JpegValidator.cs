@@ -7,7 +7,7 @@ namespace Carrigan.FileTypeValidators.FileTypeDefinitions.Images;
 /// It is commonly used for photographs and complex images due to its ability to reduce file size while maintaining acceptable image quality. 
 /// JPEG files typically have the extensions .jpg, .jpeg, or .jpe.
 /// </summary>
-public class JpegValidator : FileTypeDefinition
+public class JpegValidator : FileTypeValidatorBase
 {
     /// <summary>
     /// The JPEG file format is defined by specific byte signatures at the beginning and end of the file.

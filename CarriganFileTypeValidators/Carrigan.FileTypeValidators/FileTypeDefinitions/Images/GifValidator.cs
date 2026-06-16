@@ -9,7 +9,7 @@ namespace Carrigan.FileTypeValidators.FileTypeDefinitions.Images;
 /// The header of a GIF file starts with the ASCII characters "GIF87a" or "GIF89a", followed by a trailer that ends with the byte sequence 0x00, 0x3B.
 /// These signatures allow software to recognize and validate GIF files based on their content rather than just their file extension.
 /// </summary>
-public class GifValidator : FileTypeDefinition
+public class GifValidator : FileTypeValidatorBase
 {
     /// <summary>
     /// The signatures for GIF files consist of a specific byte sequence at the beginning of the file (the header) and a specific 

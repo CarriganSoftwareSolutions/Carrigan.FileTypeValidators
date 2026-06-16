@@ -7,7 +7,7 @@ namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions.Images;
 
 public class PngValidatorTests : ValidatorTestBase
 {
-    protected override FileTypeDefinition ValidatorDefinition =>
+    protected override FileTypeValidatorBase ValidatorDefinition =>
         new PngValidator();
 
     protected override IEnumerable<SingleSample> Samples =>

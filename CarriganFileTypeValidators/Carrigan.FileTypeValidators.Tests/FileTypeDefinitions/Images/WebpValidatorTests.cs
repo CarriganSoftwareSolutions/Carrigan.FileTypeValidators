@@ -6,7 +6,7 @@ namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions.Images;
 
 public class WebpValidatorTests : ValidatorTestBase
 {
-    protected override FileTypeDefinition ValidatorDefinition =>
+    protected override FileTypeValidatorBase ValidatorDefinition =>
         new WebpValidator();
 
     protected override IEnumerable<SingleSample> Samples =>

@@ -5,7 +5,7 @@ namespace Carrigan.FileTypeValidators.FileTypeDefinitions.Images;
 /// <summary>
 /// WebP is an image format developed by Google that provides both lossy and lossless compression.
 /// </summary>
-public class WebpValidator : FileTypeDefinition
+public class WebpValidator : FileTypeValidatorBase
 {
     /// <summary>
     /// The WebP file format is defined by specific byte signatures at the beginning of the file.
@@ -23,8 +23,8 @@ public class WebpValidator : FileTypeDefinition
         new
         (
             [
-                new ByteSignature("RIFF"u8.ToArray(), 0),
-                new ByteSignature("WEBP"u8.ToArray(), 8)
+                new ByteSignature("RIFF"u8, 0),
+                new ByteSignature("WEBP"u8, 8)
             ],
             new FileExtension("webp")
         )

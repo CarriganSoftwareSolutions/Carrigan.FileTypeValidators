@@ -7,7 +7,7 @@ namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions.Images;
 
 public class GifValidatorTests : ValidatorTestBase
 {
-    protected override FileTypeDefinition ValidatorDefinition =>
+    protected override FileTypeValidatorBase ValidatorDefinition =>
         new GifValidator();
 
     protected override IEnumerable<SingleSample> Samples =>

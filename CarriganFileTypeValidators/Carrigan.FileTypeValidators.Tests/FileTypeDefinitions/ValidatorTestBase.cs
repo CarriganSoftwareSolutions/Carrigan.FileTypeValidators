@@ -7,12 +7,12 @@ namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions;
 
 public abstract class ValidatorTestBase
 {
-    protected static IEnumerable<byte?> FromReadOnlySpan(ReadOnlySpan<byte> bytes) =>
-        bytes.ToArray().AsEnumerable().Select(aByte => (byte?)aByte);
+    protected static byte?[] FromReadOnlySpan(ReadOnlySpan<byte> bytes) =>
+        [.. bytes.ToArray().AsEnumerable().Select(aByte => (byte?)aByte)];
     protected static IEnumerable<byte?> XNulls(int x) =>
         Enumerable.Repeat<byte?>(null, x);
 
-    protected abstract FileTypeDefinition ValidatorDefinition { get; }
+    protected abstract FileTypeValidatorBase ValidatorDefinition { get; }
     protected abstract IEnumerable<SingleSample> Samples { get; }
     protected abstract IEnumerable<MimeType> MimeTypes { get; }
 
@@ -26,8 +26,11 @@ public abstract class ValidatorTestBase
         Validator = new FileTypeValidator([ValidatorDefinition]);
     }
 
-    private bool IsValid(SampleFileModel sampleFileModel) => 
+    private bool IsAllowed(SampleFileModel sampleFileModel) => 
         Validator.IsValid([.. sampleFileModel.Bytes], sampleFileModel.MimeType, sampleFileModel.FileExtension);
+
+    private bool IsBlacklisted(SampleFileModel sampleFileModel) =>
+        ValidatorDefinition.BlackListMatch([.. sampleFileModel.Bytes], sampleFileModel.MimeType, sampleFileModel.FileExtension);
 
     [Fact]
     public void ExactTest()
@@ -36,9 +39,20 @@ public abstract class ValidatorTestBase
 
             foreach (SampleFileModel sampleFileModel in exactSamples)
             {
-                Assert.True(IsValid(sampleFileModel));
+                Assert.True(IsAllowed(sampleFileModel));
             }
     }
+    [Fact]
+    public void ExactBlacklistTest()
+    {
+        IEnumerable<SampleFileModel> exactSamples = Data.GetExactSamples();
+
+        foreach (SampleFileModel sampleFileModel in exactSamples)
+        {
+            Assert.True(IsBlacklisted(sampleFileModel));
+        }
+    }
+
     [Fact]
     public void Valid()
     {
@@ -46,18 +60,41 @@ public abstract class ValidatorTestBase
 
         foreach (SampleFileModel sampleFileModel in validExamples)
         {
-            Assert.True(IsValid(sampleFileModel));
+            Assert.True(IsAllowed(sampleFileModel));
         }
     }
 
     [Fact]
-    public void ValidDueToFileExtension()
+    public void ValidBlacklistTest()
+    {
+        IEnumerable<SampleFileModel> validExamples = Data.GetValidExamples();
+
+        foreach (SampleFileModel sampleFileModel in validExamples)
+        {
+            Assert.True(IsBlacklisted(sampleFileModel));
+        }
+    }
+
+    [Fact]
+    public void InvalidDueToFileExtension()
     {
         IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidDueToFileExtension();
 
         foreach (SampleFileModel sampleFileModel in invalidExamples)
         {
-            Assert.False(IsValid(sampleFileModel));
+            Assert.False(IsAllowed(sampleFileModel));
+        }
+    }
+
+
+    [Fact]
+    public void InvalidFileExtensionBlacklist()
+    {
+        IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidDueToFileExtension();
+
+        foreach (SampleFileModel sampleFileModel in invalidExamples)
+        {
+            Assert.True(IsBlacklisted(sampleFileModel));
         }
     }
 
@@ -68,7 +105,7 @@ public abstract class ValidatorTestBase
 
         foreach (SampleFileModel sampleFileModel in invalidExamples)
         {
-            Assert.False(IsValid(sampleFileModel));
+            Assert.False(IsAllowed(sampleFileModel));
         }
     }
 
@@ -79,11 +116,20 @@ public abstract class ValidatorTestBase
 
         foreach (SampleFileModel sampleFileModel in invalidExamples)
         {
-            Assert.False(IsValid(sampleFileModel));
+            Assert.False(IsAllowed(sampleFileModel));
         }
     }
 
+    [Fact]
+    public void InvalidTrailerBlacklist()
+    {
+        IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidsDueToTrailer();
 
+        foreach (SampleFileModel sampleFileModel in invalidExamples)
+        {
+            Assert.True(IsBlacklisted(sampleFileModel));
+        }
+    }
 
     [Fact]
     public void InvalidLeaderDueToOffset()
@@ -92,7 +138,18 @@ public abstract class ValidatorTestBase
 
         foreach (SampleFileModel sampleFileModel in invalidExamples)
         {
-            Assert.False(IsValid(sampleFileModel));
+            Assert.False(IsAllowed(sampleFileModel));
+        }
+    }
+
+    [Fact]
+    public void InvalidOffsetBlacklist()
+    {
+        IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidLeaderDueToOffset();
+
+        foreach (SampleFileModel sampleFileModel in invalidExamples)
+        {
+            Assert.True(IsBlacklisted(sampleFileModel));
         }
     }
 
@@ -103,7 +160,18 @@ public abstract class ValidatorTestBase
 
         foreach (SampleFileModel sampleFileModel in invalidExamples)
         {
-            Assert.False(IsValid(sampleFileModel));
+            Assert.False(IsAllowed(sampleFileModel));
+        }
+    }
+
+    [Fact]
+    public void InvalidTrailerOffsetBlacklist()
+    {
+        IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidTrailerDueToOffset();
+
+        foreach (SampleFileModel sampleFileModel in invalidExamples)
+        {
+            Assert.True(IsBlacklisted(sampleFileModel));
         }
     }
 
@@ -114,7 +182,34 @@ public abstract class ValidatorTestBase
 
         foreach (SampleFileModel sampleFileModel in invalidExamples)
         {
-            Assert.False(IsValid(sampleFileModel));
+            Assert.False(IsAllowed(sampleFileModel));
         }
+    }
+
+    [Fact]
+    public void TrailerEmptyBlacklist()
+    {
+        IEnumerable<SampleFileModel> invalidExamples = Data.GetInvalidDueToEmptyBytes();
+
+        foreach (SampleFileModel sampleFileModel in invalidExamples)
+        {
+            Assert.True(IsBlacklisted(sampleFileModel));
+        }
+    }
+
+    [Fact]
+    public void MatchesNonBlackList()
+    {
+        SampleFileModel sampleFileModel = Data.MatchesNone();
+
+        Assert.False(IsBlacklisted(sampleFileModel));
+    }
+
+    [Fact]
+    public void MatchesNonWhiteList()
+    {
+        SampleFileModel sampleFileModel = Data.MatchesNone();
+
+        Assert.False(IsAllowed(sampleFileModel));
     }
 }

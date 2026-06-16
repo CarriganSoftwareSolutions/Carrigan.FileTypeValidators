@@ -14,7 +14,7 @@ The library is intended for allow-list and deny-list validation. It is not antiv
 - [Supported Built-In Validators](#supported-built-in-validators)
 - [Basic Usage](#basic-usage)
 - [Allow List and Deny List Validation](#allow-list-and-deny-list-validation)
-- [Creating Custom File Type Definitions](#creating-custom-file-type-definitions)
+- [Creating Custom File Type Validators](#creating-custom-file-type-validators)
 - [ASP.NET Core Upload Example](#aspnet-core-upload-example)
 - [Important Behavior Notes](#important-behavior-notes)
 - [Signature Sources](#signature-sources)
@@ -42,6 +42,18 @@ Carrigan.FileTypeValidators currently includes built-in validators for common im
 - PNG
 - TIFF / TIF, including BigTIFF signatures
 - WebP
+
+It also includes detector definitions intended for deny-list scenarios:
+
+- Windows executable-style files
+- ELF files
+- Mach-O files
+- Java class files
+- Additional COM/SYS executable-style byte patterns
+
+Detector definitions inherit from `FileTypeDetectorBase`. They are intended for deny-list use; MIME type checks are ignored if a detector is accidentally used as an allow-list validator.
+
+Note: Do not rely solely on blacklists or deny-lists. Always prioritize allow-lists as the primary validation mechanism, using blacklists only as a fallback or supplemental safeguard. Blacklists are inherently unreliable, but they are included here as an additional layer of defense.
 
 [Table of Contents](#table-of-contents)
 
@@ -88,7 +100,7 @@ using Carrigan.FileTypeValidators;
 using Carrigan.FileTypeValidators.FileTypeDefinitions;
 using Carrigan.FileTypeValidators.FileTypeDefinitions.Images;
 
-IEnumerable<FileTypeDefinition> allowed =
+IEnumerable<FileTypeValidatorBase> allowed =
 [
     new PngValidator(),
     new JpegValidator(),
@@ -96,7 +108,7 @@ IEnumerable<FileTypeDefinition> allowed =
     new WebpValidator()
 ];
 
-IEnumerable<FileTypeDefinition> disallowed =
+IEnumerable<FileTypeValidatorBase> disallowed =
 [
     new WebpValidator()
 ];
@@ -110,9 +122,9 @@ A file is valid only when it matches an allowed file type and does not match a d
 
 ---
 
-## Creating Custom File Type Definitions
+## Creating Custom File Type Validators
 
-Third-party packages and application projects can add their own validators by inheriting from `FileTypeDefinition` and returning the MIME types and file signatures that identify the custom format.
+Third-party packages and application projects can add their own validators by inheriting from `FileTypeValidatorBase` and returning the MIME types and file signatures that identify the custom format.
 
 The example below defines a fictional ACME report format. The file is considered a match when the caller-provided MIME type is `application/vnd.acme.report`, the extension is `.acmerpt` or `.arpt`, and the bytes contain `ACME` at offset `0` and `RPT` at offset `8`.
 
@@ -120,7 +132,7 @@ The example below defines a fictional ACME report format. The file is considered
 using Carrigan.FileTypeValidators.FileTypeDefinitions;
 using Carrigan.FileTypeValidators.Signatures;
 
-public sealed class AcmeReportValidator : FileTypeDefinition
+public sealed class AcmeReportValidator : FileTypeValidatorBase
 {
     private static readonly MimeType[] mimeTypes =
     [

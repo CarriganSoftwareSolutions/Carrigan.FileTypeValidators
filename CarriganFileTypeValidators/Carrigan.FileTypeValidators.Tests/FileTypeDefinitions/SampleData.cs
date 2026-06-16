@@ -1,11 +1,6 @@
-﻿using Carrigan.Core.Extensions;
-using Carrigan.FileTypeValidators.Signatures;
+﻿using Carrigan.FileTypeValidators.Signatures;
 using Carrigan.FileTypeValidators.Tests.ExtensionMethods;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace Carrigan.FileTypeValidators.Tests.FileTypeDefinitions;
 
@@ -253,6 +248,9 @@ internal class SampleData
         return sampleFiles;
     }
 
+    internal SampleFileModel MatchesNone() =>
+        Samples.First().GenerateInvalid();
+
     private class PrivateSample
     {
 
@@ -276,8 +274,7 @@ internal class SampleData
 
         internal char[] InvalidatingFileExtensionChars { get; set; }
 
-        internal PrivateSample(SingleSample singleSample, byte[] invalidatingBytes, char[] invalidatingFileExtensionChars
-            )
+        internal PrivateSample(SingleSample singleSample, byte[] invalidatingBytes, char[] invalidatingFileExtensionChars)
         {
             LeaderBytes = singleSample.LeaderBytes;
             TrailerBytes = singleSample.TrailerBytes;
@@ -413,6 +410,19 @@ internal class SampleData
             for (int i = 0; i < length; i++)
                 returnValue = returnValue.Append(cycler());
             return returnValue;
+        }
+
+
+        internal SampleFileModel GenerateInvalid()
+        {
+            Func<char> cycler = InvalidatingFileExtensionChars.CreateCycler();
+            string fileExtension = new ([cycler(), cycler(), cycler()]);
+            return new()
+            {
+                Bytes = CreateFillerBytes(),
+                MimeType = new(string.Empty),
+                FileExtension = new(fileExtension)
+            };
         }
     }
 }
