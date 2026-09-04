@@ -124,9 +124,11 @@ jobs:
     needs: build-pack
     if: needs.build-pack.outputs.is_alpha == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     env:
       NUGET_SOURCE: https://api.nuget.org/v3/index.json
-      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 
     steps:
       - name: Download NuGet packages
@@ -135,8 +137,16 @@ jobs:
           name: nuget-packages
           path: ./artifacts
 
+      - name: NuGet login
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: JonathanCarrigan
+
       - name: Publish packages to NuGet
         shell: bash
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
         run: |
           find ./artifacts -maxdepth 1 -type f -name '*.nupkg' ! -name '*.snupkg' -print0 |
           while IFS= read -r -d '' file; do
@@ -149,6 +159,8 @@ jobs:
 
       - name: Publish symbols to NuGet
         shell: bash
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
         run: |
           find ./artifacts -maxdepth 1 -type f -name '*.snupkg' -print0 |
           while IFS= read -r -d '' file; do
@@ -163,9 +175,11 @@ jobs:
     if: needs.build-pack.outputs.is_alpha != 'true'
     runs-on: ubuntu-latest
     environment: nuget-release
+    permissions:
+      contents: read
+      id-token: write
     env:
       NUGET_SOURCE: https://api.nuget.org/v3/index.json
-      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 
     steps:
       - name: Download NuGet packages
@@ -174,8 +188,16 @@ jobs:
           name: nuget-packages
           path: ./artifacts
 
+      - name: NuGet login
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: JonathanCarrigan
+
       - name: Publish packages to NuGet
         shell: bash
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
         run: |
           find ./artifacts -maxdepth 1 -type f -name '*.nupkg' ! -name '*.snupkg' -print0 |
           while IFS= read -r -d '' file; do
@@ -188,6 +210,8 @@ jobs:
 
       - name: Publish symbols to NuGet
         shell: bash
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
         run: |
           find ./artifacts -maxdepth 1 -type f -name '*.snupkg' -print0 |
           while IFS= read -r -d '' file; do
